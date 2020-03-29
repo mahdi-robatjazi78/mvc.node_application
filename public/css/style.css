@@ -1,9 +1,14 @@
 body{
-	background-color:#d1c300;
-	color:green;
+	background-color:#2a8600;
+	color:rgb(255, 217, 0);
 	font-family: 'Montserrat Alternates', sans-serif;
 	font-size:1em;
 }
 table{
 	background-color:#0047ab;
+}
+
+td{
+	color:white;
+	
 }
