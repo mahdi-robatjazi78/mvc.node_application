@@ -14,9 +14,9 @@ html(lang="en")
         .container
             h1.mb-5 this is test rest api with one example
             label please fill input:
-            .input-group.mb-5
-                input.form-control(type="text")
-                button.btn.btn-primary click me
+            .input-group.mb-5(id="form")
+                input.form-control(type="text",id="input")
+                button.btn.btn-primary(v-on:click="postTask") click me
 
             
 

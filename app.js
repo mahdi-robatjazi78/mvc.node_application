@@ -30,6 +30,29 @@ app.get('/todo',(req,res)=>{
     })
 })
 
+app.post('/todo',(req,res)=>{
+    const todo = req.body
+    fs.readFile(dataPath,(err,data)=>{
+        if(err){
+            console.log(err);
+            res.status(500).send(err)
+            return
+        }
+        data = JSON.parse(data);
+        data.push(todo)
+        data = JSON.stringify(data)
+
+        fs.writeFile(dataPath , data , (err)=>{
+            if(err){
+                console.log(err);
+                res.status(500).send(err)
+                return
+            }
+        })
+        res.status(200).send(data)
+    })
+})
+
 
 
 app.listen(3000,()=>{

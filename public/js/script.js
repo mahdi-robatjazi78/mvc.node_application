@@ -8,6 +8,21 @@ const getAllData = ()=>{
         })
     })
 }
-
-
 getAllData()
+
+
+var form = new Vue({
+    el:"#form",
+    data:{
+
+    },
+    methods:{
+        postTask:function(){
+            const data = $('#input').val()
+            !data ? alert('please fill data')  :
+            $.post('/todo',{text:data},(err)=>{
+                console.log(err);
+            })
+        }
+    }
+})
