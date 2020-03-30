@@ -4,6 +4,20 @@ const getAllData = ()=>{
             el:"#table",
             data:{
                 todos:data.reverse()
+            },
+            methods:{
+                removeTask:function(todo){
+                    $.ajax({
+                        url:'/todo',
+                        method:'delete',
+                        data:todo
+                    }).done(function(){
+                        console.log(`${todo.text} has removed now`)
+                        window.location.reload()
+                    }).fail(function(err){
+                        console.log(err)
+                    })
+                }
             }
         })
     })

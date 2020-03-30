@@ -21,9 +21,11 @@ html(lang="en")
             
 
             table.table.table-striped(id="table")
-                tbody(v-for="todo in todos")
-                    tr
+                tbody
+                    tr(v-for="todo in todos")
                         td {{todo.text}}
+                        td(width:10 )
+                            img(src='/images/trash.svg',width="30px", v-on:click="removeTask(todo)")
 
 
         script(src="/js/script.js")

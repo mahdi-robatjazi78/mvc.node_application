@@ -53,7 +53,29 @@ app.post('/todo',(req,res)=>{
     })
 })
 
+app.delete('/todo',(req,res)=>{
+    const task = req.body
+    fs.readFile(dataPath,(err,data)=>{
+        if(err){
+            console.log(err);
+            res.status(500).send(err)
+            return
+        }
+        data = JSON.parse(data);
+        data = data.filter(todo => todo.text !== task.text)
+        data = JSON.stringify(data)
 
+        fs.writeFile(dataPath , data , (err)=>{
+            if(err){
+                console.log(err);
+                res.status(500).send(err)
+                return
+            }
+
+            res.end()
+        })
+    })
+})
 
 app.listen(3000,()=>{
     console.log('server is running on port 3000');
