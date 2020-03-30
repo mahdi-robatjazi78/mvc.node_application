@@ -13,10 +13,12 @@ app.use(express.static(__dirname+"/public"))
 app.set('view engine' , 'pug')
 app.set('views',path.resolve(__dirname+'/views'))
 
+
+
+
 app.get('/',(req,res)=>{
     res.render('index')
 })
-
 
 app.get('/todo',(req,res)=>{
     fs.readFile(dataPath,(err,data)=>{
@@ -74,6 +76,34 @@ app.delete('/todo',(req,res)=>{
 
             res.end()
         })
+    })
+})
+
+app.put('/todo',(req,res)=>{
+    const oldTodo = req.body.oldTodo
+    const newTodo = req.body.newTodo
+
+    fs.readFile(dataPath,(err,data)=>{
+        if(err){
+            console.error(err);
+            alert(err)
+            return
+        }
+        
+        data = JSON.parse(data)
+        data.forEach((val,index)=>{
+            if(val.text === oldTodo){
+                data[index] = newTodo
+            }
+        })
+        data = JSON.stringify(data)
+    
+        fs.writeFile(dataPath,data,(err)=>{
+            console.error(err)
+            alert(err)
+            return
+        })
+        res.end()
     })
 })
 

@@ -13,10 +13,10 @@ html(lang="en")
     body
         .container
             h1.mb-5 this is test rest api with one example
-            label please fill input:
             .input-group.mb-5(id="form")
-                input.form-control(type="text",id="input")
-                button.btn.btn-primary(v-on:click="postTask") click me
+                label(for="input") {{editMode ? "please update this task" : "please add new task to json file"}}
+                input.form-control(type="text",id="input",v-model="newTodo.text")
+                button.btn.btn-primary(v-on:click="addOrUpdate") {{editMode ? 'EDIT MODE' :'INSERT MODE'}}
 
             
 
@@ -24,7 +24,9 @@ html(lang="en")
                 tbody
                     tr(v-for="todo in todos")
                         td {{todo.text}}
-                        td(width:10 )
+                        td(width=15)
+                            img(src="/images/edit.svg",width="30px", v-on:click="beginUpdateTask(todo)")
+                        td(width=15)
                             img(src='/images/trash.svg',width="30px", v-on:click="removeTask(todo)")
 
 

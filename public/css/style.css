@@ -10,5 +10,8 @@ table{
 
 td{
 	color:white;
-	
+}
+label{
+	display:block;
+	width:100%;
 }
