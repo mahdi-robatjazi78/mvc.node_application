@@ -11,23 +11,32 @@ html(lang="en")
         link(rel="stylesheet",href="/css/style.css")
         script(src="/js/vue.js")
     body
+        h1.m-3 this is test rest api with one example
         .container
-            h1.mb-5 this is test rest api with one example
             .input-group.mb-5(id="form")
-                label(for="input") {{editMode ? "please update this task" : "please add new task to json file"}}
-                input.form-control(type="text",id="input",v-model="newTodo.text")
-                button.btn.btn-primary(v-on:click="addOrUpdate") {{editMode ? 'EDIT MODE' :'INSERT MODE'}}
+                label(for="username") username
+                input.form-control(type="text",v-model="userName")
+                label(for="email") email
+                input.form-control(type="email",v-model="email")
+                label(for="password") password
+                input.form-control(type="password",v-model="password")
+                button.btn.btn-primary(v-on:click="signUp") signUp
 
             
 
-            table.table.table-striped(id="table")
+            table.table.table-striped.table-bordered(id="table")
+                thead
+                    tr
+                        th userName
+                        th email
+                        th password
+                        th signUp_Date
                 tbody
-                    tr(v-for="todo in todos")
-                        td {{todo.text}}
-                        td(width=15)
-                            img(src="/images/edit.svg",width="30px", v-on:click="beginUpdateTask(todo)")
-                        td(width=15)
-                            img(src='/images/trash.svg',width="30px", v-on:click="removeTask(todo)")
+                    tr(v-for="user in people")
+                        td {{user.userName}}
+                        td {{user.email}}
+                        td {{user.password}}
+                        td {{user.signUpDate}}
 
 
         script(src="/js/script.js")

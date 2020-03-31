@@ -14,6 +14,8 @@ app.use(express.static(__dirname+"/public"))
 app.use(morgan('combined',{stream:accessLogStream}))
 app.use(appRouter)
 
+
+
 app.listen(3000,()=>{
     console.log(`server is running on port 3000`)
 })

@@ -4,14 +4,14 @@ body{
 	font-family: 'Montserrat Alternates', sans-serif;
 	font-size:1em;
 }
-table{
-	background-color:#0047ab;
-}
 
-td{
-	color:white;
-}
 label{
 	display:block;
 	width:100%;
+}
+table{
+	background-color: rgb(0, 253, 177);
+}
+input{
+	background-color: none;
 }
