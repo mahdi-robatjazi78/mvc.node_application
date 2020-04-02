@@ -11,32 +11,45 @@ html(lang="en")
         link(rel="stylesheet",href="/css/style.css")
         script(src="/js/vue.js")
     body
-        h1.m-3 this is test rest api with one example
-        .container
-            .input-group.mb-5(id="form")
-                label(for="username") username
-                input.form-control(type="text",v-model="userName")
-                label(for="email") email
-                input.form-control(type="email",v-model="email")
-                label(for="password") password
-                input.form-control(type="password",v-model="password")
-                button.btn.btn-primary(v-on:click="signUp") signUp
+        header.mb-4
+            h1 this is test rest api for me
+        
+        main.d-flex
+            form.input-group.mb-5.card.col-md-2.ml-5(id="form")
+                div
+                    label(for="username") username
+                    input.form-control(type="text",v-model="userName")
+                div
+                    label(for="email") email
+                    input.form-control(type="text",v-model="email")
+                div
+                    label(for="password") password
+                    input.form-control(type="text",v-model="password")
+                button.btn.btn-primary.mt-3.mb-3(v-on:click="AddOrUpdate") {{editMode ? "Update User" : "Signup User"}}  
 
-            
+                
 
-            table.table.table-striped.table-bordered(id="table")
-                thead
-                    tr
-                        th userName
-                        th email
-                        th password
-                        th signUp_Date
-                tbody
-                    tr(v-for="user in people")
-                        td {{user.userName}}
-                        td {{user.email}}
-                        td {{user.password}}
-                        td {{user.signUpDate}}
-
+            .container
+                table.table.table-striped.table-bordered(id="table")
+                    thead
+                        tr
+                            th userName
+                            th email
+                            th password
+                            th signUp_Date
+                            th signUp_Time
+                            th REMOVE
+                            th UPDATE
+                    tbody
+                        tr(v-for="user in people")
+                            td {{user.userName}}
+                            td {{user.email}}
+                            td {{user.password}}
+                            td {{user.signUpDate}}
+                            td {{user.signUpTime}}
+                            td
+                                img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
+                            td 
+                                img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)") 
 
         script(src="/js/script.js")

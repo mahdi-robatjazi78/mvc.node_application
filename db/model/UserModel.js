@@ -4,7 +4,8 @@ const schema = new mongoose.Schema({
     userName:String,
     email:String,
     password:String,
-    signUpDate:String
+    signUpDate:String,
+    signUpTime:String,
 })
 
 
