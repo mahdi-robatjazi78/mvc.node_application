@@ -1,85 +1,91 @@
-const fetch_Users_Info = () => {
-  $.get("/User", function(data) {
-    var table = new Vue({
-      el: "#table",
-      data: {
-        people: data.reverse()
-      },
-      methods: {
-        RemoveUser: function(user) {
-          const result = confirm("مطمئنی میخوای پاکش کنی؟؟؟");
-          result
-            ? $.ajax({
-                url: "/User",
-                method: "delete",
-                data: user
-              })
-                .done(function() {
-                  alert(`${user.userName}  has deleted now`);
-                  window.location.reload();
-                })
-                .fail(function(err) {
-                  console.error(err);
-                })
-            : () => {
-                return;
-              };
+$(document).ready(function () {
+  const fetch_Users_Info = () => {
+    $.get("/userList/fetchAllData", function(data) {
+      var table = new Vue({
+        el: "#table",
+        data: {
+          people: data.reverse()
         },
-        beginUpdate: function(user) {
-          form.editMode = true;
-          form._id = user._id;
-          form.userName = user.userName;
-          form.email = user.email;
-          form.password = user.password;
+        methods: {
+          //remove user
+          RemoveUser: function(user) {
+            const result = confirm("you sure ?? you creazy???");
+            result
+            ? $.ajax({
+              url: "/User/removeUser",
+              method: "delete",
+              data: user
+            })
+            .done(function() {
+              alert(`${user.userName}  has deleted now`);
+              window.location.reload();
+            })
+            .fail(function(err) {
+              console.error(err);
+            })
+            : () => {
+              return;
+            };
+          },
+          beginUpdate: function(user) {
+            form.userName = user.userName;
+            form.phone = user.phone
+            form.email = user.email;
+            form.password = user.password;
+            form._id = user._id
+          }
         }
-      }
+      });
     });
-  });
-};
+  };
 
-var form = new Vue({
-  el: "#form",
-  data: {
-    userName: null,
-    email: null,
-    password: null,
 
-    editMode: false,
-    _id: null
-  },
-  methods: {
-    AddOrUpdate: function() {
-      let info = {
-        userName: this.userName,
-        email: this.email,
-        password: this.password
-      };
+  fetch_Users_Info();
+  
+  var form = new Vue({
+    el: "#form",
+    data:{
+      userName: null,
+      phone:null,
+      email: null,
+      password: null,
+      _id: null
+    },
+    methods:{
+      UpdateUser: function() {
+        let info = {
+          userName: this.userName,
+          phone:this.phone,
+          email: this.email,
+          password: this.password,
+          _id: this._id
+        }
 
-      if (this.editMode == true) {
         // UPDATE USER INFO
-        info._id = this._id;
-
         $.ajax({
           method: "put",
-          url: "/User",
-          // contentType:'application/json',
+          url: "/userList/updateUser",
           data: info
+        }).done(function() {
+          alert("UPDATING IS DONE");
+          window.location.reload();
+        }).fail(function(err) {
+          console.error(err);
         })
-          .done(function() {
-            alert("UPDATING IS DONE");
-            window.location.reload();
-          })
-          .fail(function(err) {
-            console.error(err);
-          });
-      } else {
+      },
+      AddNewUser:function(){
+        let info = {
+          userName: this.userName,
+          phone:this.phone,
+          email: this.email,
+          password: this.password,
+        };
+
         // SIGNUP NEW USER
-        $.post("/User", info, () => {
+        $.post("/userList/signUp", info, () => {
           window.location.reload();
         });
       }
     }
-  }
+  })
 });
-
-fetch_Users_Info();

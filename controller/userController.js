@@ -1,4 +1,4 @@
-const {userModel} = require('../../db/model/UserModel')
+const {userModel} = require('../db/model/UserModel')
 
 const persianDate = require('persian-date')
 persianDate.toLocale('en');
@@ -11,9 +11,10 @@ let time = d.getHours() +':'+d.getMinutes()+":"+d.getSeconds()
 const controller = {
     signUp:async(req,res)=>{
         try{
-            const {userName,email,password} = req.body
+            const {userName,phone,email,password} = req.body
             const newPerson = new userModel({
                 userName,
+                phone,
                 email,
                 password,
                 signUpDate:date,
@@ -37,7 +38,7 @@ const controller = {
     },
     removeUser:async(req,res)=>{
         try {
-            const {userName,email,password} = req.body
+            const {password} = req.body
             await userModel.findOneAndDelete({password})  
 
             await res.end()
@@ -48,11 +49,12 @@ const controller = {
         }
     },
     updateUser:async(req,res)=>{
-        const {userName,email,password,_id} = req.body
+        const {userName,phone,email,password,_id} = req.body
         try {
             const user = await userModel.findByIdAndUpdate(_id,{
                 $set:{
                     userName,
+                    phone,
                     email,
                     password
                 }
@@ -67,4 +69,4 @@ const controller = {
     }
 }
 
-module.exports = controller
+module.exports = controller 

@@ -1,4 +1,0 @@
-::1 - - [02/Apr/2020:06:51:29 +0000] "GET / HTTP/1.1" 500 1834 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
-::1 - - [02/Apr/2020:06:51:31 +0000] "GET / HTTP/1.1" 500 1834 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
-::1 - - [02/Apr/2020:06:54:18 +0000] "GET / HTTP/1.1" 200 2277 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"
-::1 - - [02/Apr/2020:06:54:18 +0000] "GET /User HTTP/1.1" 200 1274 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36"

@@ -1,0 +1,46 @@
+include layout.pug
+body
+    
+    include ./header.pug
+    
+    main.container
+
+        table.table.table-striped.table-bordered(id="table")
+            thead
+                tr
+                    th userName
+                    th phone
+                    th email
+                    th password
+                    th signUp_Date
+                    th signUp_Time
+                    th REMOVE
+                    th UPDATE
+            tbody
+                tr(v-for="user in people")
+                    td {{user.userName}}
+                    td {{user.phone}}
+                    td {{user.email}}
+                    td {{user.password}}
+                    td {{user.signUpDate}}
+                    td {{user.signUpTime}}
+                    td
+                        img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
+                    td 
+                        img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)"
+                        data-toggle="collapse", data-target="#collapseExample", aria-expanded="false",
+                        aria-controls="collapseExample") 
+        
+        .collapse#collapseExample
+            form.row(id="form")
+                .col
+                    input.form-control.mb-1(type="text" , placeholder="userName" , v-model="userName")
+                    input.form-control.mb-1(type="text" , placeholder="phone" , v-model="phone")
+                .col  
+                    input.form-control.mb-1(type="text" , placeholder="email" , v-model="email")
+                    input.form-control.mb-1(type="text" , placeholder="password" , v-model="password")
+                .col
+                    button.btn.btn-primary(v-on:click="UpdateUser") update User
+
+
+    include ./footer.pug

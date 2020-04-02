@@ -19,11 +19,22 @@ td{
 }
 header{
 	width:100%;
-	height:140px;
+	height:100px;
 	background-color:rgb(76, 160, 76);
 }
-header h1{
+
+.nav-link{
+	display:flex;
+	flex-direction: row;
+	justify-content: space-around;
 	padding:40px 20px;
+	list-style-type: none;
+	cursor: pointer;
+}
+.nav-link a{
+	color:rgb(168, 0, 0);
+	font-size:1.4em;
+
 }
 .logo{
 	width:20px;
@@ -33,5 +44,18 @@ header h1{
 .card{
 	background: rgb(76, 160, 76);
 	border-radius: 5px;
-	height:fit-content
+	height:fit-content;
+	margin:40px;
+}
+main{
+	height:70vh;
+}
+#form{
+	width:100%;
+}
+.col input{
+	width:100%;
+}
+.signUp h3{
+	display:inline
 }

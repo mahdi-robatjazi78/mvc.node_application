@@ -1,11 +1,16 @@
 const router = require('express').Router()
-const usersController = require('../controller/users/userController')
+const userController = require('../controller/userController')
 
 
-router.post('/',usersController.signUp)
-router.get('/',usersController.fetchAllData)
-router.delete('/',usersController.removeUser)
-router.put('/',usersController.updateUser)
+router.get('/',(req,res)=>{
+    res.render('../views/UserList.pug')
+})
+
+
+router.post('/signUp',userController.signUp)
+router.get('/fetchAllData',userController.fetchAllData)
+router.delete('/removeUser',userController.removeUser)
+router.put('/updateUser',userController.updateUser)
 
 
 module.exports = router

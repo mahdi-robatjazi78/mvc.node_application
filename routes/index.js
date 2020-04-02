@@ -1,10 +1,15 @@
 const router = require('express').Router()
-const mainRoute = require('./main.routes')
+
+
+const mainRoute = require('./home.routes')
 const UserRoute = require('./User.routes')
+const AboutRoute = require('./aboutMe.routes')
+const TodoRoute = require('./todos.routes')
 
 
 router.use('/',mainRoute)
-router.use('/User',UserRoute)
-
+router.use('/userList',UserRoute)
+router.use('/about',AboutRoute)
+router.use('/todoList',TodoRoute)
 
 module.exports = router 
