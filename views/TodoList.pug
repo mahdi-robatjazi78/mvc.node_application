@@ -1,16 +1,33 @@
 include layout.pug
+script(src="/js/TodoScript.js")
 body
     include ./header.pug
+    .container.mb-5.mt-5
+        .input-group(id="form")
+            input.form-control(id="Task")
+            button.btn.btn-danger(id="submit") Submit Task
 
     main.container
         table.table.table-striped.table-bordered
             thead
                 tr
                     th todo
-                    th remove
+                    th date
+                    th time
                     th update
+                    th remove
+            
             tbody
-                tr
-                    td
+                - 
+                each item in allTasks 
+                    tr
+                        td #{item.todo}
+                        td #{item.date}
+                        td #{item.time}
+                        td(class="edit")
+                            img.logo(src='/images/edit.svg')
+                        td(class="trash")
+                            img.logo(src="/images/trash.svg")
+
 
     include ./footer.pug

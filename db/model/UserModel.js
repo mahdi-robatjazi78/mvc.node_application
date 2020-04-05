@@ -9,14 +9,7 @@ const UserSchema = new mongoose.Schema({
     signUpTime:String,
 })
 
-const TodoSchema =new mongoose.Schema({
-    todo:String,
-    isDone:Boolean,
-})
-
-
 
 const userModel = mongoose.model('user',UserSchema)
-const todoModel = mongoose.model('todo',TodoSchema)
 
-module.exports = {userModel,todoModel}
+module.exports = userModel

@@ -1,4 +1,4 @@
-const {userModel} = require('../db/model/UserModel')
+const userModel = require('../db/model/UserModel')
 
 const persianDate = require('persian-date')
 persianDate.toLocale('en');
