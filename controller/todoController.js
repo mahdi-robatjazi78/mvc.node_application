@@ -1,19 +1,17 @@
 const {todoModel} = require('../db/model/TodoModel')
 
 
-const persianDate = require('persian-date')
-persianDate.toLocale('en')
-let date = new persianDate().format('YYYY/M/DD')
-
 let d = new Date()
+let date = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate()
 let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
 
 
 const todoController = {
     fetchAllTask:async(req,res)=>{
         try {
-            let allTasks = await todoModel.find({})  
-            res.status(200).render('../views/TodoList.pug',{allTasks})
+            let allTasks = await todoModel.find({})
+            let count = await todoModel.countDocuments({})
+            res.status(200).render('../views/TodoList.pug',{allTasks,count})
         } catch (err) {
             console.error(err);
         }
@@ -36,8 +34,8 @@ const todoController = {
     },
     removeTask : async(req,res)=>{
         try {
+            console.log(req.body);
             let todo = Object.keys(req.body)[0]
-            
             await todoModel.findOneAndDelete({todo})
             res.end() 
         } catch (err) {
@@ -57,6 +55,18 @@ const todoController = {
             })
 
 
+            await res.end()
+        } catch (err) {
+            console.error(err);
+        }
+    },
+    done : async(req,res)=>{
+        try {
+            await todoModel.findOneAndUpdate({
+                _id : req.body._id
+            },{
+                $set:{isDone:req.body.isChecked}
+            })
             await res.end()
         } catch (err) {
             console.error(err);

@@ -2,7 +2,7 @@ $(document).ready(function () {
     // REMOVE TASK J-QUERY__AJAX
     $('.trash').on('click',function(e){
         
-        let todo = $(this).closest('tr').find('td:eq(0)').text()
+        let todo = $(this).closest('tr').find('td:eq(1)').text()
         let consent = confirm('you want remove task now ???')
         consent ? 
             $.ajax({
@@ -60,18 +60,22 @@ $(document).ready(function () {
         
     });
 
-
-
-
+    // edit mode input 
     $('.edit').on('click',function(e){
-        
-
-        const todo = $(this).closest('tr').find("td:eq(0)").text()
+        const todo = $(this).closest('tr').find("td:eq(1)").text()
         $('#Task').val(todo)
         $("#submit").text('Edit Task')
-        
         oldTask = todo
         editMode = true
-        
     })
+
+
+    // done checkbox
+    $('[type = checkbox]').on('click',function(e){
+        isChecked = e.target.checked
+        $.post('/todoList/done',{isChecked,_id : e.target.value},function(){
+            window.location.reload()
+        })            
+    })
+
 });

@@ -1,10 +1,8 @@
 const userModel = require('../db/model/UserModel')
 
-const persianDate = require('persian-date')
-persianDate.toLocale('en');
-const date = new persianDate().format('YYYY/M/DD')
 
 const d = new Date()
+let date = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate()
 let time = d.getHours() +':'+d.getMinutes()+":"+d.getSeconds()
 
 
@@ -31,7 +29,10 @@ const controller = {
     fetchAllData:async(req,res)=>{
         try {
             let data = await userModel.find({})
-            await res.status(200).send(data)
+            let count = await userModel.countDocuments({})
+            
+            res.status(200).send({data,count})
+
         } catch (err) {
             console.error(err);
         }

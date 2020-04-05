@@ -48,7 +48,7 @@ header{
 	margin:40px;
 }
 main{
-	height:70vh;
+	height:fit-content;
 }
 #form{
 	width:100%;
@@ -58,4 +58,7 @@ main{
 }
 .signUp h3{
 	display:inline
+}
+.done{
+	text-decoration: line-through;
 }

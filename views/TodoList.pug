@@ -8,9 +8,13 @@ body
             button.btn.btn-danger(id="submit") Submit Task
 
     main.container
+
+        h2.mb-3 count : #{count}
+
         table.table.table-striped.table-bordered
             thead
                 tr
+                    th(width=5) isDone
                     th todo
                     th date
                     th time
@@ -20,10 +24,12 @@ body
             tbody
                 - 
                 each item in allTasks 
-                    tr
-                        td #{item.todo}
-                        td #{item.date}
-                        td #{item.time}
+                    tr  
+                        td(width=5)
+                            input(type="checkbox" ,checked = item.isDone , value=item._id)
+                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.todo}
+                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.date}
+                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.time}
                         td(class="edit")
                             img.logo(src='/images/edit.svg')
                         td(class="trash")
@@ -31,3 +37,5 @@ body
 
 
     include ./footer.pug
+
+        

@@ -4,9 +4,11 @@ body
     
     include ./header.pug
     
-    main.container
+    main.container(id="table")
+        
+        h1.mb-3 count : {{count}}
 
-        table.table.table-striped.table-bordered(id="table")
+        table.table.table-striped.table-bordered
             thead
                 tr
                     th userName

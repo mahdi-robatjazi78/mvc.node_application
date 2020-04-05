@@ -1,10 +1,11 @@
 $(document).ready(function () {
   const fetch_Users_Info = () => {
-    $.get("/userList/fetchAllData", function(data) {
+    $.get("/userList/userList", function({data,count}) {
       var table = new Vue({
         el: "#table",
         data: {
-          people: data.reverse()
+          people: data.reverse(),
+          count
         },
         methods: {
           //remove user
@@ -12,7 +13,7 @@ $(document).ready(function () {
             const result = confirm("you sure ?? you creazy???");
             result
             ? $.ajax({
-              url: "/User/removeUser",
+              url: "/userList/removeUser",
               method: "delete",
               data: user
             })
@@ -27,6 +28,7 @@ $(document).ready(function () {
               return;
             };
           },
+          // begin update
           beginUpdate: function(user) {
             form.userName = user.userName;
             form.phone = user.phone
