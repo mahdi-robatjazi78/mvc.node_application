@@ -1,11 +1,14 @@
 const mongoose = require('../connection/connect')
+const timestamps = require('mongoose-timestamp')
 
 const TodoSchema = new mongoose.Schema({
     todo:String,
     isDone:Boolean,
+    time:String,
     date:String,
-    time:String
 })
+
+TodoSchema.plugin(timestamps)
 
 const todoModel = mongoose.model('tasks',TodoSchema)
 

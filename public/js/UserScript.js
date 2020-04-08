@@ -1,11 +1,11 @@
 $(document).ready(function () {
   const fetch_Users_Info = () => {
-    $.get("/userList/userList", function({data,count}) {
+    $.get("/userList/fetch", function({data,count}) {
       var table = new Vue({
         el: "#table",
         data: {
           people: data.reverse(),
-          count
+          count,  
         },
         methods: {
           //remove user

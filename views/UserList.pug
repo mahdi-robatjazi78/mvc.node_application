@@ -1,13 +1,9 @@
 include layout.pug
 script(src="/js/UserScript.js")
 body
-    
     include ./header.pug
-    
-    main.container(id="table")
-        
+    main(id="table")
         h1.mb-3 count : {{count}}
-
         table.table.table-striped.table-bordered
             thead
                 tr
@@ -33,7 +29,6 @@ body
                         img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)"
                         data-toggle="collapse", data-target="#collapseExample", aria-expanded="false",
                         aria-controls="collapseExample") 
-        
         .collapse#collapseExample
             form.row(id="form")
                 .col

@@ -1,9 +1,11 @@
 const {todoModel} = require('../db/model/TodoModel')
+const moment = require('moment')
 
 
 let d = new Date()
-let date = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate()
+let date = d.getFullYear() + '/0' + (d.getMonth()+1) + '/0' + d.getDate()
 let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
+
 
 
 const todoController = {
@@ -11,7 +13,7 @@ const todoController = {
         try {
             let allTasks = await todoModel.find({})
             let count = await todoModel.countDocuments({})
-            res.status(200).render('../views/TodoList.pug',{allTasks,count})
+            res.status(200).render('../views/TodoList.pug',{allTasks,count,moment})
         } catch (err) {
             console.error(err);
         }
@@ -22,8 +24,8 @@ const todoController = {
             const newTask = new todoModel({
                 todo : body.todo,
                 isDone : false,
+                time,
                 date,
-                time
             })
             await newTask.save()
             res.end()
@@ -34,7 +36,6 @@ const todoController = {
     },
     removeTask : async(req,res)=>{
         try {
-            console.log(req.body);
             let todo = Object.keys(req.body)[0]
             await todoModel.findOneAndDelete({todo})
             res.end() 

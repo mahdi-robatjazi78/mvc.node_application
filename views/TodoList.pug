@@ -20,7 +20,7 @@ body
                     th time
                     th update
                     th remove
-            
+                    th created At
             tbody
                 - 
                 each item in allTasks 
@@ -34,6 +34,7 @@ body
                             img.logo(src='/images/edit.svg')
                         td(class="trash")
                             img.logo(src="/images/trash.svg")
+                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{moment(item.createdAt).fromNow()}
 
 
     include ./footer.pug

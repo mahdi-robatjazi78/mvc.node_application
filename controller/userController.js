@@ -1,6 +1,5 @@
 const userModel = require('../db/model/UserModel')
 
-
 const d = new Date()
 let date = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate()
 let time = d.getHours() +':'+d.getMinutes()+":"+d.getSeconds()
@@ -31,7 +30,7 @@ const controller = {
             let data = await userModel.find({})
             let count = await userModel.countDocuments({})
             
-            res.status(200).send({data,count})
+            await res.status(200).send({data,count})
 
         } catch (err) {
             console.error(err);

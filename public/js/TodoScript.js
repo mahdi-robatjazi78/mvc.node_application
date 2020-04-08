@@ -3,20 +3,16 @@ $(document).ready(function () {
     $('.trash').on('click',function(e){
         
         let todo = $(this).closest('tr').find('td:eq(1)').text()
-        let consent = confirm('you want remove task now ???')
-        consent ? 
-            $.ajax({
-                method:'delete',
-                url:'/todoList/removeTask',
-                data:todo
-            }).done(function(){
-                alert('your task is removed now' + todo)
-                window.location.reload()
-            }).fail(function(err){
-                console.error(err);
-            })
-        :
-        ()=>{return}
+        $.ajax({
+            method:'delete',
+            url:'/todoList/removeTask',
+            data:todo
+        }).done(function(){
+            // alert('your task is removed now' + todo)
+            window.location.reload()
+        }).fail(function(err){
+            console.error(err);
+        })
     })
 
 

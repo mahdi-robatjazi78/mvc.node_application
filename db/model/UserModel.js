@@ -1,4 +1,5 @@
 const mongoose = require('../connection/connect')
+const timestamps = require('mongoose-timestamp')
 
 const UserSchema = new mongoose.Schema({
     userName:String,
@@ -9,6 +10,7 @@ const UserSchema = new mongoose.Schema({
     signUpTime:String,
 })
 
+UserSchema.plugin(timestamps)
 
 const userModel = mongoose.model('user',UserSchema)
 
