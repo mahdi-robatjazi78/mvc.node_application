@@ -34,7 +34,6 @@ header{
 .nav-link a{
 	color:rgb(168, 0, 0);
 	font-size:1.4em;
-
 }
 .logo{
 	width:20px;
@@ -61,4 +60,7 @@ main{
 }
 .done{
 	text-decoration: line-through;
+}
+.display-4{
+	font-size:2em;
 }

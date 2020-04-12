@@ -3,34 +3,32 @@ script(src="/js/UserScript.js")
 body
     include ./header.pug
     main(id="table")
-        
-        h2.mb-3 count : #{count}
-            
-        table.table.table-striped.table-bordered
-            thead
-                tr
-                    th userName
-                    th phone
-                    th email
-                    th password
-                    th signUp_Date
-                    th signUp_Time
-                    th REMOVE
-                    th UPDATE
-            tbody
-                tr(v-for="user in people")
-                    td {{user.userName}}
-                    td {{user.phone}}
-                    td {{user.email}}
-                    td {{user.password}}
-                    td {{user.signUpDate}}
-                    td {{user.signUpTime}}
-                    td
-                        img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
-                    td 
-                        img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)"
-                        data-toggle="collapse", data-target="#collapseExample", aria-expanded="false",
-                        aria-controls="collapseExample") 
+        p.display-4.text-white.text-center please go to home page and then signUp 
+        h2.mb-3 count : {{count}}
+        .container    
+            table.table.table-striped.table-bordered
+                thead
+                    tr
+                        th userName
+                        th phone
+                        th email
+                        th signUp_Date
+                        th signUp_Time
+                        th REMOVE
+                        th UPDATE
+                tbody
+                    tr(v-for="user in people")
+                        td {{user.userName}}
+                        td {{user.phone}}
+                        td {{user.email}}
+                        td {{user.signUpDate}}
+                        td {{user.signUpTime}}
+                        td
+                            img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
+                        td 
+                            img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)"
+                            data-toggle="collapse", data-target="#collapseExample", aria-expanded="false",
+                            aria-controls="collapseExample") 
         .collapse#collapseExample
             form.row(id="form")
                 .col

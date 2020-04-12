@@ -1,4 +1,5 @@
 const userModel = require('../db/model/UserModel')
+const bcrypt = require('bcryptjs')
 
 const d = new Date()
 let date = d.getFullYear() + '/' + d.getMonth() + '/' + d.getDate()
@@ -8,30 +9,31 @@ let time = d.getHours() +':'+d.getMinutes()+":"+d.getSeconds()
 const controller = {
     signUp:async(req,res)=>{
         try{
-            const {userName,phone,email,password} = req.body
+            let {userName,phone,email,password} = req.body
+            let salt = await bcrypt.genSalt(10)
+            let hash = await bcrypt.hash(password,salt)
+            password = hash
+            
             const newPerson = new userModel({
                 userName,
                 phone,
                 email,
-                password,
-                signUpDate:date,
-                signUpTime:time
+                password ,
+                signUpDate : date,
+                signUpTime : time
             })
             await newPerson.save(()=>{
                 res.end()
             })
-
         }catch(err){
-            console.error(`${err}`);
+            console.error(err);
         }
     },
     fetchAllData:async(req,res)=>{
         try {
             let data = await userModel.find({})
             let count = await userModel.countDocuments({})
-            
             await res.status(200).send({data,count})
-
         } catch (err) {
             console.error(err);
         }
