@@ -9,7 +9,16 @@ body
 
     main.container
 
-        h2.mb-3 count : #{count}
+        .d-flex.justify-content-between
+            h2.mb-3 count : #{count}
+            
+            .btn-group.dropright
+                button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | Filter ToDoList
+                .dropdown-menu
+                    a.dropdown-item(href="/todoList/all") all Todos 
+                    a.dropdown-item(href="/todoList/enabled") Enabled Todos 
+                    a.dropdown-item(href="/todoList/disabled") Disabled Todos 
 
         table.table.table-striped.table-bordered
             thead
@@ -27,14 +36,14 @@ body
                     tr  
                         td(width=5)
                             input(type="checkbox" ,checked = item.isDone , value=item._id)
-                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.todo}
-                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.date}
-                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{item.time}
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.todo}
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.date}
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.time}
                         td(class="edit")
                             img.logo(src='/images/edit.svg')
                         td(class="trash")
                             img.logo(src="/images/trash.svg")
-                        td(class=item.isDone == true ? 'text-secondary done' : '' ) #{moment(item.createdAt).fromNow()}
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{moment(item.createdAt).fromNow()}
 
 
     include ./footer.pug

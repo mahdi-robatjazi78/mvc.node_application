@@ -3,7 +3,7 @@ const moment = require('moment')
 
 
 let d = new Date()
-let date = d.getFullYear() + '/0' + (d.getMonth()+1) + '/0' + d.getDate()
+let date = d.getFullYear() + '/0' + (d.getMonth()+1) + '/' + d.getDate()
 let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
 
 
@@ -16,6 +16,24 @@ const todoController = {
             res.status(200).render('../views/TodoList.pug',{allTasks,count,moment})
         } catch (err) {
             console.error(err);
+        }
+    },
+    enabledTasks:async(req,res)=>{
+        try {
+            let allTasks = await todoModel.find({isDone:false})
+            let count = allTasks.length
+            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    disabledTasks:async(req,res)=>{
+        try {
+            let allTasks = await todoModel.find({isDone:true})
+            let count = allTasks.length
+            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+        } catch (err) {
+            console.log(err);
         }
     },
     NewTask : async(req,res)=>{

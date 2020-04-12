@@ -3,7 +3,9 @@ script(src="/js/UserScript.js")
 body
     include ./header.pug
     main(id="table")
-        h1.mb-3 count : {{count}}
+        
+        h2.mb-3 count : #{count}
+            
         table.table.table-striped.table-bordered
             thead
                 tr
