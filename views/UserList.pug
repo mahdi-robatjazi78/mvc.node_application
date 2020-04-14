@@ -2,9 +2,13 @@ include layout.pug
 script(src="/js/UserScript.js")
 body
     include ./header.pug
-    main(id="table")
-        p.display-4.text-white.text-center please go to home page and then signUp 
-        h2.mb-3 count : {{count}}
+    main#table
+        p.mb-4.display-4.text-white.text-center please go to home page and then signUp 
+
+        .container.d-flex.justify-content-between
+            h2.mb-3 count : {{count}}
+            input(type="text",class="form-control col-5",placeholder="search in userNames",
+                v-model="textSearch",v-on:keyup="searchUser" id="search")
         .container    
             table.table.table-striped.table-bordered
                 thead
@@ -14,8 +18,8 @@ body
                         th email
                         th signUp_Date
                         th signUp_Time
-                        th REMOVE
-                        th UPDATE
+                        th Remove
+                        th Update
                 tbody
                     tr(v-for="user in people")
                         td {{user.userName}}
@@ -36,9 +40,6 @@ body
                     input.form-control.mb-1(type="text" , placeholder="phone" , v-model="phone")
                 .col  
                     input.form-control.mb-1(type="text" , placeholder="email" , v-model="email")
-                    input.form-control.mb-1(type="text" , placeholder="password" , v-model="password")
-                .col
-                    button.btn.btn-primary(v-on:click="UpdateUser") update User
-
+                    button.btn.btn-info.btn-block.text-warning(v-on:click="UpdateUser") update User
 
     include ./footer.pug
