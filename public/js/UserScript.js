@@ -54,7 +54,7 @@ $(document).ready(function () {
 
 
   var form = new Vue({
-    el: "#form",
+    el: ".form",
     data:{
       userName: null,
       phone:null,
@@ -96,7 +96,8 @@ $(document).ready(function () {
           method:"post",
           url:"/userList/signUp",
           data:info,
-        }).done(function(msg){
+        })
+        .done(function(msg){
           console.log(msg);
         }).fail(function(msg){
           console.log(msg);
@@ -104,4 +105,5 @@ $(document).ready(function () {
       }
     }
   })
+
 });

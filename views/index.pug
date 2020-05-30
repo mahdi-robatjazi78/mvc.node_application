@@ -3,27 +3,72 @@ script(src="/js/UserScript.js")
 body
     include ./header.pug
 
-    main 
-        button.btn.btn-success(data-toggle="collapse" , data-target=".collapseExample" 
-        ,aria-expanded="false" , aria-controls=".collapseExample") signUp
-
-        form.input-group.card.col-md-2.collapse.collapseExample(id="form")
-            div
-                label(for="username") username
-                input.form-control(type="text",v-model="userName")
-            div
-                label(for="phone") phone
-                input.form-control(type="text",v-model="phone")
-            div
-                label(for="email") email
-                input.form-control(type="text",v-model="email")
-            div
-                label(for="password") password
-                input.form-control(type="text",v-model="password")
-            div
-                button.btn.btn-primary.mt-3.mb-3(v-on:click="AddNewUser") Add User
-        
+    main.row
+        //- section
+        //-     .alert.alert-primary(role='alert')  
+        //-         if token ""
+        //-         else "please signUp or login now"    
 
 
+
+        section.col-md-5
+            button.btn.btn-success(data-toggle="collapse" , data-target=".collapseExample" 
+            ,aria-expanded="false" , aria-controls=".collapseExample") signUp user
+
+            form.input-group.card.collapse.collapseExample.p-5(class="form")
+                div
+                    label(for="username") username
+                    input.form-control(type="text" v-model="userName")
+                div
+                    label(for="phone") phone
+                    input.form-control(type="text" v-model="phone")
+                div
+                    label(for="email") email
+                    input.form-control(type="text" v-model="email")
+                div
+                    label(for="password") password
+                    input.form-control(type="text" v-model="password")
+                div
+                    button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="AddNewUser") new User
+        section.col-md-5
+            button.btn.btn-success(data-toggle="collapse" , data-target=".loginCollapse" 
+            ,aria-expanded="false" , aria-controls=".loginCollapse") login User
+
+            form.input-group.card.collapse.loginCollapse.p-5(id="login_form")
+                div
+                    label(for="email") email
+                    input.form-control(type="text" v-model="email")
+                div
+                    label(for="password") password
+                    input.form-control(type="text" v-model="password")
+                div
+                    button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="loginUser") login User
 
     include ./footer.pug
+
+script.
+    let login = new Vue({
+        el:"#login_form",
+        data:{
+            email:null,
+            password:null
+        },
+        methods:{
+            loginUser:function(e){
+                //- e.preventDefault()
+                let info = {
+                    email:this.email,
+                    password:this.password
+                }
+                $.ajax({
+                    method:"post",
+                    url:"/userList/login",
+                    data:info
+                }).done(function(){
+                    console.log('done')
+                }).fail(function(err){
+                    console.error(err)
+                })
+            }
+        }
+    })

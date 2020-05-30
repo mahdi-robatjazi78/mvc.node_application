@@ -10,6 +10,7 @@ router.get('/fetch',userController.fetchAllData)
 router.post('/signUp',userController.signUp)
 router.delete('/removeUser',userController.removeUser)
 router.put('/updateUser',userController.updateUser)
+router.post('/login',userController.loginUser)
 
 
 module.exports = router
