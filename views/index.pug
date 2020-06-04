@@ -1,16 +1,18 @@
 include ./layout.pug
 script(src="/js/UserScript.js")
+script.
+    var name = localStorage.getItem('userName') || sessionStorage.getItem('userName')
 body
     include ./header.pug
 
+    section.container   
+        .alert.alert-primary
+            script.
+                document.write(`hello___ ${name} ___you are signIn now enjoy in this application`)
+            button.close(type='button', data-dismiss='alert', aria-label='Close')
+                span(aria-hidden='true') ×
+
     main.row
-        //- section
-        //-     .alert.alert-primary(role='alert')  
-        //-         if token ""
-        //-         else "please signUp or login now"    
-
-
-
         section.col-md-5
             button.btn.btn-success(data-toggle="collapse" , data-target=".collapseExample" 
             ,aria-expanded="false" , aria-controls=".collapseExample") signUp user
@@ -30,6 +32,8 @@ body
                     input.form-control(type="text" v-model="password")
                 div
                     button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="AddNewUser") new User
+        
+        
         section.col-md-5
             button.btn.btn-success(data-toggle="collapse" , data-target=".loginCollapse" 
             ,aria-expanded="false" , aria-controls=".loginCollapse") login User
@@ -41,34 +45,13 @@ body
                 div
                     label(for="password") password
                     input.form-control(type="text" v-model="password")
+                .form-group.form-check
+                    input#exampleCheck1.form-check-input(type='checkbox' v-model="permanent")
+                    label.form-check-label(for='exampleCheck1') remember_me
+
                 div
                     button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="loginUser") login User
 
     include ./footer.pug
 
-script.
-    let login = new Vue({
-        el:"#login_form",
-        data:{
-            email:null,
-            password:null
-        },
-        methods:{
-            loginUser:function(e){
-                //- e.preventDefault()
-                let info = {
-                    email:this.email,
-                    password:this.password
-                }
-                $.ajax({
-                    method:"post",
-                    url:"/userList/login",
-                    data:info
-                }).done(function(){
-                    console.log('done')
-                }).fail(function(err){
-                    console.error(err)
-                })
-            }
-        }
-    })
+    

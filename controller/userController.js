@@ -31,6 +31,7 @@ const signUpControl = async (userName, phone, email) => {
 	}
 }
 
+
 const controller = {
 	signUp: async (req, res) => {
 		try {
@@ -74,8 +75,9 @@ const controller = {
 	},
 	removeUser: async (req, res) => {
 		try {
-			const { _id } = req.body
-			await userModel.findByIdAndDelete(_id)
+			
+			console.log(req.body._id);
+			await userModel.findByIdAndDelete(req.body._id)
 
 			await res.end()
 		} catch (err) {
@@ -117,20 +119,21 @@ const controller = {
 			}
 
 			let token = jwt.sign({
-				id: user._id.toHexString(),
+				_id: user._id.toHexString(),
+				access:'auth'
 			},process.env.JWT_SECRET_KEY,{expiresIn:3600}).toString()
 
 
 			user.tokens.push({
-				access:'auth',
 				token
 			})
-			res.status(200).header({'x-auth':token}).json({MSG:'your login successfuly done'})
+			res.status(200).send({token,userName:user.userName})
 			return user.save()
 			
 			
         } catch (err) {
 			console.error(err);
+			res.status(400).send(err)
         }
 	},
 

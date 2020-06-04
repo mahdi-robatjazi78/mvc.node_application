@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const userController = require('../controller/userController')
+const auth = require("../controller/authentication")
+
 
 router.get('/',function(req,res){
     res.render('../views/UserList.pug')

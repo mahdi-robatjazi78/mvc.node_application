@@ -10,6 +10,7 @@ const UserSchema = new mongoose.Schema({
 	signUpTime: String,
 	tokens: [
         { 
+			_id:false,
             access:String,
             token: String,
         }

@@ -1,109 +1,157 @@
 $(document).ready(function () {
+	const fetch_Users_Info = () => {
+		$.get("/userList/fetch", function ({ data, count }) {
+			var table = new Vue({
+				el: "#table",
+				data: {
+					people: data.reverse(),
+					count,
+					textSearch: null,
+				},
+				methods: {
+					//remove Users
+					RemoveUser: function (user) {
+						console.log(user)
+						const result = confirm("you sure ?? you creazy???")
+						result
+						? 
+							$.ajax({
+								url: "/userList/removeUser",
+								method: "delete",
+								data:{_id : user._id}
+							})
+								.done(function () {
+									alert(
+										`${user.userName}  has deleted now`
+									)
+									window.location.reload()
+								})
+								.fail(function (err) {
+									alert(err.msg)
+								})
+							:()=>{
+								return
+							}
+					},
+					// begin update
+					beginUpdate: function (user) {
+						form.userName = user.userName
+						form.phone = user.phone
+						form.email = user.email
+						form._id = user._id
+					},
+					//search Users
+					searchUser: function () {
+						let user = data.filter((item) =>
+							item.userName.startsWith(this.textSearch)
+						)
+						this.people = user
+					},
+				},
+			})
+		})
+	}
 
-  const fetch_Users_Info = () => {
+	fetch_Users_Info()
 
-    $.get("/userList/fetch", function({data,count}) {
-      var table = new Vue({
-        el: "#table",
-        data: {
-          people: data.reverse(),
-          count,
-          textSearch:null,  
-        },
-        methods: {
-          //remove Users
-          RemoveUser: function(user) {
-            const result = confirm("you sure ?? you creazy???");
-            result
-            ? $.ajax({
-                url: "/userList/removeUser",
-                method: "delete",
-                data: user
-              })
-              .done(function() {
-                alert(`${user.userName}  has deleted now`);
-                window.location.reload();
-              })
-              .fail(function(err) {
-                console.error(err);
-              })
-            : () => {
-                return;
-              };
-          },
-          // begin update
-          beginUpdate: function(user) {
-            form.userName = user.userName;
-            form.phone = user.phone
-            form.email = user.email;
-            form._id = user._id
-          },
-          //search Users
-          searchUser:function(){
-            let user = data.filter(item=>item.userName.startsWith(this.textSearch))
-            this.people = user
-          }
-        }
-      })
-    })
-  }
+	var form = new Vue({
+		el: ".form",
+		data: {
+			userName: null,
+			phone: null,
+			email: null,
+			password: null,
+			_id: null,
+		},
+		methods: {
+			UpdateUser: function () {
+				let info = {
+					userName: this.userName,
+					phone: this.phone,
+					email: this.email,
+					_id: this._id,
+				}
 
+				// UPDATE USER INFO
+				$.ajax({
+					method: "put",
+					url: "/userList/updateUser",
+					data: info,
+				})
+					.done(function () {
+						alert("UPDATING IS DONE")
+						window.location.reload()
+					})
+					.fail(function (err) {
+						console.error(err)
+					})
+			},
+			AddNewUser: function () {
+				let info = {
+					userName: this.userName,
+					phone: this.phone,
+					email: this.email,
+					password: this.password,
+				}
 
-  fetch_Users_Info();
-  
+				// SIGNUP NEW USER
+				$.ajax({
+					method: "post",
+					url: "/userList/signUp",
+					data: info,
+				})
+				.done(function (msg) {
+					console.log(msg)
+				})
+				.fail(function (msg) {
+					console.log(msg)
+				})
+			},
+		}
+	})
 
+	//login part
 
-  var form = new Vue({
-    el: ".form",
-    data:{
-      userName: null,
-      phone:null,
-      email: null,
-      password: null,
-      _id: null
-    },
-    methods:{
-      UpdateUser: function() {
-        let info = {
-          userName: this.userName,
-          phone:this.phone,
-          email: this.email,
-          _id: this._id
-        }
+	let login = new Vue({
+		el: "#login_form",
+		data: {
+			email: null,
+			password: null,
+			permanent: false,
+		},
+		methods: {
+			loginUser: function (e) {
+				//- e.preventDefault()
+				let thiss = this
+				let info = {
+					email: this.email,
+					password: this.password,
+				}
+				$.ajax({
+					method: "post",
+					url: "/userList/login",
+					data: info,
+				})
+				.done(function (dataStore) {
+					console.log(dataStore);
+					thiss.saveUserData(dataStore, thiss.permanent)
+				})
+				.fail(function (err) {
+					console.error(err)
+				})
+			},
+			saveUserData: function (dataStore, permanent) {
 
-        // UPDATE USER INFO
-        $.ajax({
-          method: "put",
-          url: "/userList/updateUser",
-          data: info
-        }).done(function() {
-          alert("UPDATING IS DONE");
-          window.location.reload();
-        }).fail(function(err) {
-          console.error(err);
-        })
-      },
-      AddNewUser:function(){
-        let info = {
-          userName: this.userName,
-          phone:this.phone,
-          email: this.email,
-          password:this.password
-        };
+				console.log(dataStore);
+				if (permanent) {
 
-        // SIGNUP NEW USER
-        $.ajax({
-          method:"post",
-          url:"/userList/signUp",
-          data:info,
-        })
-        .done(function(msg){
-          console.log(msg);
-        }).fail(function(msg){
-          console.log(msg);
-        })
-      }
-    }
-  })
-
-});
+					localStorage.setItem("x-auth", dataStore.token)
+					localStorage.setItem("userName", dataStore.userName)
+				} else {
+					sessionStorage.setItem("x-auth", dataStore.token)
+					sessionStorage.setItem("userName", dataStore.userName)
+				}
+			},
+		},
+	})
+})

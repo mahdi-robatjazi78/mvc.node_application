@@ -1,5 +1,4 @@
 include layout.pug
-script(src="/js/TodoScript.js")
 body
     include ./header.pug
     .container.mb-5.mt-5
@@ -31,9 +30,9 @@ body
                     th remove
                     th created At
             tbody
-                - 
-                each item in allTasks 
-                    tr  
+                -
+                each item in allTasks
+                    tr
                         td(width=5)
                             input(type="checkbox" ,checked = item.isDone , value=item._id)
                         td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.todo}
@@ -46,6 +45,9 @@ body
                         td(class=item.isDone == true ? 'text-muted done' : '' ) #{moment(item.createdAt).fromNow()}
 
 
+
+
     include ./footer.pug
+    script(src="/js/TodoScript_JQ.js")
 
         

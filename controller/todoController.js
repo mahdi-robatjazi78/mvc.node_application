@@ -9,36 +9,21 @@ let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
 
 
 const todoController = {
+
     fetchAllTask:async(req,res)=>{
         try {
+            // console.log(req.user);
             let allTasks = await todoModel.find({})
             let count = await todoModel.countDocuments({})
-            res.status(200).render('../views/TodoList.pug',{allTasks,count,moment})
+            await res.render('../views/TodoList.pug',{allTasks,count,moment})
         } catch (err) {
             console.error(err);
-        }
-    },
-    enabledTasks:async(req,res)=>{
-        try {
-            let allTasks = await todoModel.find({isDone:false})
-            let count = allTasks.length
-            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
-        } catch (err) {
-            console.log(err);
-        }
-    },
-    disabledTasks:async(req,res)=>{
-        try {
-            let allTasks = await todoModel.find({isDone:true})
-            let count = allTasks.length
-            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
-        } catch (err) {
-            console.log(err);
         }
     },
     NewTask : async(req,res)=>{
         try {
             const body = req.body
+
             const newTask = new todoModel({
                 todo : body.todo,
                 isDone : false,
@@ -46,7 +31,7 @@ const todoController = {
                 date,
             })
             await newTask.save()
-            res.end()
+            res.status(200).send('your data saved now')
             
         } catch (err) {
             console.error(err);            
@@ -90,7 +75,25 @@ const todoController = {
         } catch (err) {
             console.error(err);
         }
-    }
+    },
+    enabledTasks:async(req,res)=>{
+        try {
+            let allTasks = await todoModel.find({isDone:false})
+            let count = allTasks.length
+            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    disabledTasks:async(req,res)=>{
+        try {
+            let allTasks = await todoModel.find({isDone:true})
+            let count = allTasks.length
+            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+        } catch (err) {
+            console.log(err);
+        }
+    },
 }
 
 module.exports = todoController
