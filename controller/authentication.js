@@ -14,19 +14,16 @@ module.exports =function(req,res,next){
 
         
         userModel.findOne({
+           
             _id:decoded._id
+
         }).then(User=>{
-           
-           
             req.user = User
             req.token = token
             next()
-
         })
-
     } catch (err) {
         console.error(err);
         res.status(500).send({message:"invalid Token"})
     }
-
 }

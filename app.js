@@ -2,12 +2,12 @@ const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
 const appRouter = require("./routes")
-const path = require("path")
-const morgan = require("morgan")
-const fs = require("fs")
-const accessLogStream = fs.createWriteStream(
-	path.join(__dirname, "log/logger.log")
-)
+// const path = require("path")
+// const morgan = require("morgan")
+// const fs = require("fs")
+// const accessLogStream = fs.createWriteStream(
+// 	path.join(__dirname, "log/logger.log")
+// )
 require("dotenv").config()
 
 app.set("view engine", "pug")

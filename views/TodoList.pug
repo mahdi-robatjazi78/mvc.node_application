@@ -1,23 +1,34 @@
 include layout.pug
-body
+script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js")
+script(src="/js/TodoScript_JQ.js")
+
+body(style="background-color:#b15656")
     include ./header.pug
     .container.mb-5.mt-5
-        .input-group(id="form")
+        form.input-group(id="form")
             input.form-control(id="Task")
-            button.btn.btn-danger(id="submit") Submit Task
+            button.btn.btn-danger#submit Submit Task
 
     main.container
+        .jumbotron
+            h1.display-3.text-center.mt-3.mb-3.text-dark FAST TABLE SHOW TASKS
 
         .d-flex.justify-content-between
-            h2.mb-3 count : #{count}
+            h2.mb-3(id='count')
+            
+            
+            button.btn.btn-info.fetch(value="all") fetchAllTasks
             
             .btn-group.dropright
                 button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | Filter ToDoList
                 .dropdown-menu
-                    a.dropdown-item(href="/todoList/all") all Todos 
-                    a.dropdown-item(href="/todoList/enabled") Enabled Todos 
-                    a.dropdown-item(href="/todoList/disabled") Disabled Todos 
+                    span.dropdown-item.all(value="all") all Todos 
+                    span.dropdown-item.enabled(value="enabled") Enabled Todos 
+                    span.dropdown-item.disable(value="disabled") Disabled Todos 
+            
+
+
 
         table.table.table-striped.table-bordered
             thead
@@ -29,25 +40,20 @@ body
                     th update
                     th remove
                     th created At
-            tbody
-                -
-                each item in allTasks
+            tbody#tbody
+                    
+                //- data.allTasks.map(item=>{
                     tr
+
                         td(width=5)
                             input(type="checkbox" ,checked = item.isDone , value=item._id)
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.todo}
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.date}
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{item.time}
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.todo
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.date
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.time
                         td(class="edit")
                             img.logo(src='/images/edit.svg')
                         td(class="trash")
                             img.logo(src="/images/trash.svg")
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) #{moment(item.createdAt).fromNow()}
-
-
-
+                        td(class=item.isDone == true ? 'text-muted done' : '' ) data.moment(item.createdAt).fromNow()
 
     include ./footer.pug
-    script(src="/js/TodoScript_JQ.js")
-
-        

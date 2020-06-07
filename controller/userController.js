@@ -75,8 +75,6 @@ const controller = {
 	},
 	removeUser: async (req, res) => {
 		try {
-			
-			console.log(req.body._id);
 			await userModel.findByIdAndDelete(req.body._id)
 
 			await res.end()
@@ -108,28 +106,32 @@ const controller = {
 		try {
 			const {email,password} = req.body
 			let user = await userModel.findOne({email})
+			
 			if(!user){
 				console.log(`your email not found in our database`)
-				return res.status(404).json({Error : `your email not found in our database`})
+				return res.status(400).json({err:`your email not found in our database`})
 			}
+
 			let result = await bcrypt.compare(password,user.password)
+
 			if(!result){
 				console.log('your password is incorrect please enter another password');
-				return res.status(400).json({Error:`your password is incorrect please enter another password`})
+				return res.status(400).json({err:'your password is incorrect please enter another password'})
 			}
+
+			//GENEARATION TOKEN: _one day for expiration token ((60 minute * 60 seconds)*24 hours)
 
 			let token = jwt.sign({
 				_id: user._id.toHexString(),
 				access:'auth'
-			},process.env.JWT_SECRET_KEY,{expiresIn:3600}).toString()
-
+			},process.env.JWT_SECRET_KEY,{expiresIn:(60*60)*24}).toString()
 
 			user.tokens.push({
 				token
 			})
+
 			res.status(200).send({token,userName:user.userName})
 			return user.save()
-			
 			
         } catch (err) {
 			console.error(err);

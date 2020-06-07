@@ -1,6 +1,6 @@
 body{
-	background-color:#2a8600;
-	color:rgb(239, 243, 28);
+	background-color:#683564;
+	color:rgb(226, 174, 31);
 	font-family: 'Montserrat Alternates', sans-serif;
 	font-size:1em;
 	margin:0;
@@ -66,4 +66,10 @@ main{
 }
 #search{
 	background-color:rgb(179, 251, 166);
+}	
+footer{
+	position:fixed;
+	bottom:0;	
+	width:100%;
+	padding:25px;
 }

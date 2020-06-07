@@ -4,12 +4,12 @@ const _AUTH = require('../controller/authentication')
 require('dotenv').config()
 
 //todolist
-router.get('/',todoController.fetchAllTask)
+router.get('/',todoController.todoPage)
+router.get('/all',_AUTH,todoController.fetchAllTask)
 
 //filtering
-router.get('/all',todoController.fetchAllTask)
-router.get('/enabled',todoController.enabledTasks)
-router.get('/disabled',todoController.disabledTasks)
+router.get('/enabled',_AUTH,todoController.enabledTasks)
+router.get('/disabled',_AUTH,todoController.disabledTasks)
 
 //api
 router.post('/newTask',_AUTH,todoController.NewTask)

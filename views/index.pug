@@ -2,15 +2,8 @@ include ./layout.pug
 script(src="/js/UserScript.js")
 script.
     var name = localStorage.getItem('userName') || sessionStorage.getItem('userName')
-body
+body(style="background-color:#2a8600")
     include ./header.pug
-
-    section.container   
-        .alert.alert-primary
-            script.
-                document.write(`hello___ ${name} ___you are signIn now enjoy in this application`)
-            button.close(type='button', data-dismiss='alert', aria-label='Close')
-                span(aria-hidden='true') ×
 
     main.row
         section.col-md-5

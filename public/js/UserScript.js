@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	
 	const fetch_Users_Info = () => {
 		$.get("/userList/fetch", function ({ data, count }) {
 			var table = new Vue({
@@ -11,7 +12,6 @@ $(document).ready(function () {
 				methods: {
 					//remove Users
 					RemoveUser: function (user) {
-						console.log(user)
 						const result = confirm("you sure ?? you creazy???")
 						result
 						? 
@@ -121,7 +121,6 @@ $(document).ready(function () {
 		},
 		methods: {
 			loginUser: function (e) {
-				//- e.preventDefault()
 				let thiss = this
 				let info = {
 					email: this.email,
@@ -131,18 +130,18 @@ $(document).ready(function () {
 					method: "post",
 					url: "/userList/login",
 					data: info,
-				})
-				.done(function (dataStore) {
-					console.log(dataStore);
-					thiss.saveUserData(dataStore, thiss.permanent)
+					success:function(dataStore){
+						// SET TOKEN IN LOCAL STORAGE OR SESSION STORAGE
+						thiss.saveUserToken(dataStore, thiss.permanent)
+					}
 				})
 				.fail(function (err) {
-					console.error(err)
+					e.preventDefault()
+					
+					console.error(err.msg)
 				})
 			},
-			saveUserData: function (dataStore, permanent) {
-
-				console.log(dataStore);
+			saveUserToken: function (dataStore, permanent) {
 				if (permanent) {
 
 					localStorage.setItem("x-auth", dataStore.token)

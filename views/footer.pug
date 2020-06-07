@@ -1,3 +1,22 @@
-footer
-    hr
-    p author : mahdi robatjazi
+hr
+footer(style="background-color:#683564")
+    .d-flex
+        div
+            p(style="margin:0") programmer : mahdi_Robatjazi
+            small
+                i(style="margin-left:20px") All rights reserved.
+
+        div.ml-auto
+            .row
+                .m-auto
+                    img(src="/images/user_logo.png" alt="userLogo" width="40px" height='40px')
+            .row.mr-3
+                small
+                    i.text-warning
+                        script.
+                            document.write(
+                                localStorage.getItem('userName')||
+                                sessionStorage.getItem('userName')||
+                                'you are not login'
+                            )
+        

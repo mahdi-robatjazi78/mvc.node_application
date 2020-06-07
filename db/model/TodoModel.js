@@ -6,6 +6,7 @@ const TodoSchema = new mongoose.Schema({
     isDone:Boolean,
     time:String,
     date:String,
+    userId:String
 })
 
 TodoSchema.plugin(timestamps)

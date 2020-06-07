@@ -1,5 +1,4 @@
 const {todoModel} = require('../db/model/TodoModel')
-const moment = require('moment')
 
 
 let d = new Date()
@@ -9,13 +8,18 @@ let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
 
 
 const todoController = {
-
+    todoPage:async(req,res)=>{
+        try {
+            await res.render('../views/TodoList.pug')
+        } catch (error) {
+            console.log(error);
+        }   
+    },
     fetchAllTask:async(req,res)=>{
         try {
-            // console.log(req.user);
-            let allTasks = await todoModel.find({})
-            let count = await todoModel.countDocuments({})
-            await res.render('../views/TodoList.pug',{allTasks,count,moment})
+            let allTasks = await todoModel.find({userId:req.user._id})
+            let count = allTasks.length
+            await res.send({allTasks,count})
         } catch (err) {
             console.error(err);
         }
@@ -23,12 +27,14 @@ const todoController = {
     NewTask : async(req,res)=>{
         try {
             const body = req.body
+            const userId = req.user._id
 
             const newTask = new todoModel({
                 todo : body.todo,
                 isDone : false,
                 time,
                 date,
+                userId
             })
             await newTask.save()
             res.status(200).send('your data saved now')
@@ -78,18 +84,18 @@ const todoController = {
     },
     enabledTasks:async(req,res)=>{
         try {
-            let allTasks = await todoModel.find({isDone:false})
+            let allTasks = await todoModel.find({isDone:false,userId:req.user._id})
             let count = allTasks.length
-            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+            await res.send({allTasks,count})
         } catch (err) {
             console.log(err);
         }
     },
     disabledTasks:async(req,res)=>{
         try {
-            let allTasks = await todoModel.find({isDone:true})
+            let allTasks = await todoModel.find({isDone:true,userId:req.user._id})
             let count = allTasks.length
-            await res.status(200).render("../views/todoList.pug",{allTasks,count,moment})
+            await res.send({allTasks,count})
         } catch (err) {
             console.log(err);
         }
