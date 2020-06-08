@@ -36,7 +36,7 @@ const controller = {
 	signUp: async (req, res) => {
 		try {
 			
-			let { userName, phone, email, password } = req.body
+			let { userName, phone, email, password } = req.body 
 
 			let existInDataBase = await signUpControl(userName, phone, email)
 			if (existInDataBase == true) {
@@ -57,7 +57,7 @@ const controller = {
 					signUpTime: time,
 				})
 				await newPerson.save()
-				res.status(200)
+				res.status(200).send('you are signUp now ; and you into our userList. congratulations')
 				
 			}
 		} catch (err) {
@@ -130,7 +130,7 @@ const controller = {
 				token
 			})
 
-			res.status(200).send({token,userName:user.userName})
+			res.status(200).json({token,userName:user.userName,msg:'you\'r login is successfully!!! congratulations'})
 			return user.save()
 			
         } catch (err) {

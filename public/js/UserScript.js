@@ -98,15 +98,18 @@ $(document).ready(function () {
 				$.ajax({
 					method: "post",
 					url: "/userList/signUp",
-					data: info,
+					contentType:"application/json",
+					data: JSON.stringify(info),
+					success:function(res){
+						Success=true
+						location.assign(`/userList/?msg=${res}`)
+					},
+					error:function(err){
+						Success=false
+						console.log(err)
+					}
 				})
-				.done(function (msg) {
-					console.log(msg)
-				})
-				.fail(function (msg) {
-					console.log(msg)
-				})
-			},
+			}
 		}
 	})
 
@@ -120,7 +123,7 @@ $(document).ready(function () {
 			permanent: false,
 		},
 		methods: {
-			loginUser: function (e) {
+			loginUser: function () {
 				let thiss = this
 				let info = {
 					email: this.email,
@@ -130,27 +133,29 @@ $(document).ready(function () {
 					method: "post",
 					url: "/userList/login",
 					data: info,
-					success:function(dataStore){
+					success:function(data){
+						Success=true;
 						// SET TOKEN IN LOCAL STORAGE OR SESSION STORAGE
-						thiss.saveUserToken(dataStore, thiss.permanent)
+						thiss.saveUserToken(data, thiss.permanent)
+						window.location.assign(`/userList/?msg=${data.msg}`)
+					},
+					error:function(err){
+						Success=false;
+						console.error(err)
+
 					}
 				})
-				.fail(function (err) {
-					e.preventDefault()
-					
-					console.error(err.msg)
-				})
 			},
-			saveUserToken: function (dataStore, permanent) {
+			saveUserToken: function (data, permanent) {
 				if (permanent) {
 
-					localStorage.setItem("x-auth", dataStore.token)
-					localStorage.setItem("userName", dataStore.userName)
+					localStorage.setItem("x-auth",data.token)
+					localStorage.setItem("userName",data.userName)
 				} else {
-					sessionStorage.setItem("x-auth", dataStore.token)
-					sessionStorage.setItem("userName", dataStore.userName)
+					sessionStorage.setItem("x-auth",data.token)
+					sessionStorage.setItem("userName",data.userName)
 				}
-			},
-		},
+			}
+		}
 	})
 })
