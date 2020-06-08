@@ -15,6 +15,9 @@ router.get('/disabled',_AUTH,todoController.disabledTasks)
 router.post('/newTask',_AUTH,todoController.NewTask)
 router.delete('/removeTask',_AUTH,todoController.removeTask)
 router.put('/updateTask',_AUTH,todoController.updateTask)
+
+//THIS IS CHECKBOX CHECKE AJAX FOR ENABLING AND DISABLING TODOS ROUTE____
+// THIS ONE I NOT USE AUTHENTICATION !
 router.post('/done',todoController.done)
 
 

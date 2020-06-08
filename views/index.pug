@@ -3,6 +3,7 @@ script(src="/js/UserScript.js")
 script.
     var name = localStorage.getItem('userName') || sessionStorage.getItem('userName')
 body(style="background-color:#2a8600")
+    
     include ./header.pug
 
     main.row
@@ -10,7 +11,7 @@ body(style="background-color:#2a8600")
             button.btn.btn-success(data-toggle="collapse" , data-target=".collapseExample" 
             ,aria-expanded="false" , aria-controls=".collapseExample") signUp user
 
-            form.input-group.card.collapse.collapseExample.p-5(class="form")
+            form.input-group.card.collapse.collapseExample.p-5(v-on:submit.prevent="AddNewUser" class="form")
                 div
                     label(for="username") username
                     input.form-control(type="text" v-model="userName")
@@ -24,14 +25,14 @@ body(style="background-color:#2a8600")
                     label(for="password") password
                     input.form-control(type="text" v-model="password")
                 div
-                    button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="AddNewUser") new User
+                    button.btn.btn-primary.btn-block.mt-3.mb-3 new User
         
         
         section.col-md-5
             button.btn.btn-success(data-toggle="collapse" , data-target=".loginCollapse" 
             ,aria-expanded="false" , aria-controls=".loginCollapse") login User
 
-            form.input-group.card.collapse.loginCollapse.p-5(id="login_form")
+            form.input-group.card.collapse.loginCollapse.p-5(v-on:submit.prevent="loginUser" id="login_form")
                 div
                     label(for="email") email
                     input.form-control(type="text" v-model="email")
@@ -43,8 +44,8 @@ body(style="background-color:#2a8600")
                     label.form-check-label(for='exampleCheck1') remember_me
 
                 div
-                    button.btn.btn-primary.btn-block.mt-3.mb-3(v-on:click="loginUser") login User
+                    button.btn.btn-primary.btn-block.mt-3.mb-3 login User
+
+
 
     include ./footer.pug
-
-    

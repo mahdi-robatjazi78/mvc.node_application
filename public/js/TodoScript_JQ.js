@@ -7,7 +7,7 @@ $(document).ready(function () {
 		try {
 			request.setRequestHeader(
 				"Authorization",
-				localStorage.getItem("x-auth")
+				localStorage.getItem("x-auth")||sessionStorage.getItem("x-auth")
 			)
 		} catch (err) {
 			console.error(err)

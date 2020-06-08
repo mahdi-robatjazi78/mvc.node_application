@@ -3,7 +3,7 @@ script(src="/js/UserScript.js")
 body(style="background-color:#008b8b")
     include ./header.pug
     main#table
-        p.mb-4.display-4.text-white.text-center please go to home page and then signUp 
+        p.mb-4.display-4.text-white.text-center#msg please go to home page and then signUp 
 
         .container.d-flex.justify-content-between
             h2.mb-3 count : {{count}}
@@ -43,3 +43,11 @@ body(style="background-color:#008b8b")
                     button.btn.btn-info.btn-block.text-warning(v-on:click="UpdateUser") update User
 
     include ./footer.pug
+
+
+    script.
+        var urlParams = new URLSearchParams(location.search)
+        var msg = urlParams.get('msg')
+        if(msg){
+            $("#msg").text(msg)
+        }
