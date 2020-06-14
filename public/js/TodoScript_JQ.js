@@ -1,7 +1,4 @@
 $(document).ready(function () {
-	// FADE JUMBOTRON AFTER 3 SECOND
-	$('.jumbotron').fadeOut(3000)
-
 	// SEND TOKEN FOR AUTHENTICATION BEFORE EXECUTE ANY OPERATION
 	const sendToken = function (request) {
 		try {
@@ -74,16 +71,16 @@ $(document).ready(function () {
 					<td width="5%" class="chk">
 						<input type="checkbox" value=${item._id} />
 					</td>
-					<td class=${item.isDone === true ? "text-muted done" : ""}>${item.todo}</td>
-					<td class=${item.isDone === true ? "text-muted done" : ""}>${item.date}</td>
-					<td class=${item.isDone === true ? "text-muted done" : ""}>${item.time}</td>
+					<td class=${item.isDone === true ? " done" : ""}>${item.todo}</td>
+					<td class=${item.isDone === true ? " done" : ""}>${item.date}</td>
+					<td class=${item.isDone === true ? " done" : ""}>${item.time}</td>
 					<td class="edit">
 						<img class="logo" src="/images/edit.svg">
 					</td>
 					<td class="trash">
 						<img class="logo" src="/images/trash.svg">
 					</td>
-					<td class=${item.isDone === true ? "text-muted done" : ""}>
+					<td class=${item.isDone === true ? " done" : ""}>
 						${moment(item.createdAt).fromNow()}
 					</td>							
 				</tr>
@@ -109,7 +106,7 @@ $(document).ready(function () {
 					return
 				}
 				// TASKS COUNT
-				$("#count").html(`count : ${data.count}`)
+				$("#count").html(`count : ${data.count}`).css({color:'black'})
 
 				// WRITE TASKS TO TODOLIST PAGE
 				writeHtmlTable(data.allTasks, data.moment)

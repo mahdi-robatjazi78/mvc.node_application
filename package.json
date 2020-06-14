@@ -19,7 +19,6 @@
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.7",
     "mongoose-timestamp": "^0.6.0",
-    "morgan": "^1.10.0",
     "nodemon": "^2.0.2",
     "persian-date": "^1.1.0",
     "pug": "^2.0.4"

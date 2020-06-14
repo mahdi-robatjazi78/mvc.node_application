@@ -130,7 +130,7 @@ const controller = {
 				token
 			})
 
-			res.status(200).json({token,userName:user.userName,msg:'you\'r login is successfully!!! congratulations'})
+			res.status(200).json({token,userName:user.userName,msg:'you are login now congratulations! your cash is 1000$. free cash for you'})
 			return user.save()
 			
         } catch (err) {

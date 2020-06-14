@@ -8,6 +8,10 @@ const UserSchema = new mongoose.Schema({
 	password: String,
 	signUpDate: String,
 	signUpTime: String,
+	cash:{
+		type:Number,
+		default:1000
+	},
 	tokens: [
         { 
 			_id:false,

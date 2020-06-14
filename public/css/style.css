@@ -1,5 +1,5 @@
 body{
-	background-color:#683564;
+	background-color:#bebebe;
 	color:rgb(226, 174, 31);
 	font-family: 'Montserrat Alternates', sans-serif;
 	font-size:1em;
@@ -8,32 +8,38 @@ body{
 }
 
 label{
+	color:darkmagenta;
 	display:block;
 	width:100%;
 }
 table{
-	background-color: rgb(0, 168, 118);
+	background-color: rgb(172, 102, 102);
 }
 td{
-	color:rgb(11, 0, 167)
+	color:rgb(85, 35, 139);
+	font-weight:bold;
 }
 header{
 	width:100%;
-	height:100px;
-	background-color:rgb(76, 160, 76);
+	height:50px;
+	background-color:#c8c8c8;
+	border-bottom:2px dotted rgb(136, 136, 136)
 }
 
 .nav-link{
+	font-size:.8em;
 	display:flex;
 	flex-direction: row;
-	justify-content: space-around;
-	padding:40px 20px;
+	/* justify-content: space-around; */
+	/* padding:20px 20px; */
 	list-style-type: none;
 	cursor: pointer;
 }
 .nav-link a{
 	color:rgb(168, 0, 0);
-	font-size:1.4em;
+	font-size:1.3em;
+	padding-left: 50px;
+	font-weight: bold;
 }
 .logo{
 	width:20px;
@@ -41,7 +47,7 @@ header{
 	margin:auto;
 }
 .card{
-	background: rgb(76, 160, 76);
+	background: rgb(155, 176, 190);
 	border-radius: 5px;
 	height:fit-content;
 	margin:40px;
@@ -60,16 +66,36 @@ main{
 }
 .done{
 	text-decoration: line-through;
+	color:rgb(204, 173, 173)
 }
 .display-4{
 	font-size:2em;
 }
-#search{
-	background-color:rgb(179, 251, 166);
+.search{
+	background-color:rgb(223, 223, 223);
+	border:1px solid black;
+	border-radius:9px;
 }	
 footer{
+	background-color:rgb(155, 176, 190);
 	position:fixed;
 	bottom:0;	
 	width:100%;
-	padding:25px;
+	height:75px;
+	color:black;
+	margin-bottom:8px;
+	padding:14px;
+	border-top:1px solid blue;
+	font-weight: bold;
+}
+.btn{
+	border:1px solid black;
+}
+
+#btn_login,#btn_register{
+	background-color:darkviolet
+}
+
+.color_schema{
+	color:red;
 }

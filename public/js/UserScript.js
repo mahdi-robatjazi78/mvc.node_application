@@ -1,5 +1,7 @@
 $(document).ready(function () {
-	
+
+
+		
 	const fetch_Users_Info = () => {
 		$.get("/userList/fetch", function ({ data, count }) {
 			var table = new Vue({

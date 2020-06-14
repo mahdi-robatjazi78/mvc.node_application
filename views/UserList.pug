@@ -1,14 +1,20 @@
 include layout.pug
 script(src="/js/UserScript.js")
-body(style="background-color:#008b8b")
+body
     include ./header.pug
-    main#table
-        p.mb-4.display-4.text-white.text-center#msg please go to home page and then signUp 
+    main#table.mt-5
+        script.
+            var urlParams = new URLSearchParams(window.location.search)
+            var msg = urlParams.get('msg')
+            var isLogin = window.localStorage.getItem('x-auth')
+
+        p.mb-4.display-4.text-dark.text-center#msg= isLogin
+        
 
         .container.d-flex.justify-content-between
-            h2.mb-3 count : {{count}}
+            h2.mb-3.text-dark count : {{count}}
             input(type="text",class="form-control col-5",placeholder="search in userNames",
-                v-model="textSearch",v-on:keyup="searchUser" id="search")
+                v-model="textSearch",v-on:keyup="searchUser" class="search")
         .container    
             table.table.table-striped.table-bordered
                 thead
