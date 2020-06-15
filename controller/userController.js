@@ -2,7 +2,6 @@ const userModel = require("../db/model/UserModel")
 const bcrypt = require("bcryptjs")
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
-const auth = require('./authentication')
 
 const d = new Date()
 let date = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
@@ -31,7 +30,6 @@ const signUpControl = async (userName, phone, email) => {
 	}
 }
 
-
 const controller = {
 	signUp: async (req, res) => {
 		try {
@@ -45,6 +43,7 @@ const controller = {
 					.send("your data exist in database please set another data")
 				return
 			} else {
+
 				let salt = await bcrypt.genSalt(10)
 				let hash = await bcrypt.hash(password, salt)
 
@@ -56,8 +55,21 @@ const controller = {
 					signUpDate: date,
 					signUpTime: time,
 				})
+
+
+				const token = jwt.sign({
+					_id:newPerson._id.toHexString(),
+					access:'auth'
+				},process.env.JWT_SECRET_KEY).toString()
+
+				newPerson.tokens.push({token})
+
 				await newPerson.save()
-				res.status(200).send('you are signUp now ; and you into our userList. congratulations')
+				res.status(200).json({
+					msg:'you are signUp now ; and you into our userList. congratulations',
+					userName:newPerson.userName,
+					token
+				})
 				
 			}
 		} catch (err) {
@@ -129,8 +141,7 @@ const controller = {
 			user.tokens.push({
 				token
 			})
-
-			res.status(200).json({token,userName:user.userName,msg:'you\'r login is successfully!!! congratulations'})
+			res.status(200).json({token,userName:user.userName,msg:'you are login now congratulations! your cash is 1000$. free money for you'})
 			return user.save()
 			
         } catch (err) {

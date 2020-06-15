@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	
+
 	const fetch_Users_Info = () => {
 		$.get("/userList/fetch", function ({ data, count }) {
 			var table = new Vue({
@@ -102,7 +102,8 @@ $(document).ready(function () {
 					data: JSON.stringify(info),
 					success:function(res){
 						Success=true
-						location.assign(`/userList/?msg=${res}`)
+						login.saveUserToken(res)
+						location.assign(`/userList/?msg=${res.msg}`)
 					},
 					error:function(err){
 						Success=false
@@ -146,7 +147,7 @@ $(document).ready(function () {
 					}
 				})
 			},
-			saveUserToken: function (data, permanent) {
+			saveUserToken: function (data, permanent=60*60*60) {
 				if (permanent) {
 
 					localStorage.setItem("x-auth",data.token)

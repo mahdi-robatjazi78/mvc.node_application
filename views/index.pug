@@ -1,51 +1,53 @@
 include ./layout.pug
 script(src="/js/UserScript.js")
-script.
-    var name = localStorage.getItem('userName') || sessionStorage.getItem('userName')
-body(style="background-color:#2a8600")
-    
+
+body
     include ./header.pug
+
+    h1.display-4.text-center.mb-5.text-dark#text_welcome(style="text-decoration:underline") 
+
 
     main.row
         section.col-md-5
-            button.btn.btn-success(data-toggle="collapse" , data-target=".collapseExample" 
+            button.btn(data-toggle="collapse" , data-target=".collapseExample" 
             ,aria-expanded="false" , aria-controls=".collapseExample") signUp user
 
             form.input-group.card.collapse.collapseExample.p-5(v-on:submit.prevent="AddNewUser" class="form")
                 div
-                    label(for="username") username
-                    input.form-control(type="text" v-model="userName")
+                    label(for="userName") username
+                    input.form-control(type="text" v-model="userName" id="userName")
                 div
                     label(for="phone") phone
-                    input.form-control(type="text" v-model="phone")
+                    input.form-control(type="text" v-model="phone" id="phone")
                 div
                     label(for="email") email
-                    input.form-control(type="text" v-model="email")
+                    input.form-control(type="text" v-model="email" id="email")
                 div
                     label(for="password") password
-                    input.form-control(type="text" v-model="password")
+                    input.form-control(type="text" v-model="password" id="password")
                 div
-                    button.btn.btn-primary.btn-block.mt-3.mb-3 new User
-        
+
+                    button.btn.btn-primary.btn-block.mt-3.mb-3#btn_register new User
+
         
         section.col-md-5
-            button.btn.btn-success(data-toggle="collapse" , data-target=".loginCollapse" 
+            button.btn(data-toggle="collapse" , data-target=".loginCollapse" 
             ,aria-expanded="false" , aria-controls=".loginCollapse") login User
 
             form.input-group.card.collapse.loginCollapse.p-5(v-on:submit.prevent="loginUser" id="login_form")
                 div
-                    label(for="email") email
-                    input.form-control(type="text" v-model="email")
+                    label(for="l_email") email
+                    input.form-control(type="text" v-model="email" id="l_email")
                 div
-                    label(for="password") password
-                    input.form-control(type="text" v-model="password")
+                    label(for="l_password") password
+                    input.form-control(type="text" v-model="password" id="l_password")
                 .form-group.form-check
                     input#exampleCheck1.form-check-input(type='checkbox' v-model="permanent")
                     label.form-check-label(for='exampleCheck1') remember_me
 
                 div
-                    button.btn.btn-primary.btn-block.mt-3.mb-3 login User
 
-
+                    button.btn.btn-block.mt-3.mb-3#btn_login login User
 
     include ./footer.pug
+

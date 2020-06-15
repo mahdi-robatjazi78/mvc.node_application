@@ -2,16 +2,14 @@ include layout.pug
 script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js")
 script(src="/js/TodoScript_JQ.js")
 
-body(style="background-color:#b15656")
+body
     include ./header.pug
     .container.mb-5.mt-5
         form.input-group(id="form")
-            input.form-control(id="Task")
+            input.form-control(id="Task" class="search")
             button.btn.btn-danger#submit Submit Task
 
     main.container
-        .jumbotron
-            h1.display-3.text-center.mt-3.mb-3.text-dark FAST TABLE SHOW TASKS
 
         .d-flex.justify-content-between
             h2.mb-3(id='count')
@@ -41,19 +39,8 @@ body(style="background-color:#b15656")
                     th remove
                     th created At
             tbody#tbody
-                    
-                //- data.allTasks.map(item=>{
-                    tr
+                
 
-                        td(width=5)
-                            input(type="checkbox" ,checked = item.isDone , value=item._id)
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.todo
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.date
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) item.time
-                        td(class="edit")
-                            img.logo(src='/images/edit.svg')
-                        td(class="trash")
-                            img.logo(src="/images/trash.svg")
-                        td(class=item.isDone == true ? 'text-muted done' : '' ) data.moment(item.createdAt).fromNow()
+
 
     include ./footer.pug
