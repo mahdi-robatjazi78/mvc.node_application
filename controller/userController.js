@@ -153,12 +153,14 @@ const controller = {
 			user.tokens.push({
 				token
 			})
+
 			res.status(200).json({
 				userName: user.userName,
 				imageFilename:user.imageAddress.filename,
 				cash: user.cash,
 				token,
 				msg: 'you are login now congratulations! your cash is 250$. free money for you' })
+
 			return user.save()
 
 		} catch (err) {
