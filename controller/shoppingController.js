@@ -1,8 +1,16 @@
 const userModel = require('../db/model/UserModel')
 const fs = require('fs');
+<<<<<<< HEAD
 const path = require('path')
 
 
+=======
+const { url } = require('inspector');
+const path = require('path')
+
+
+
+>>>>>>> #feature : add shopping center route and design it
 // this api write with primise not usage_await
 const shopController = {
     shoppingPage:(req,res)=>{
@@ -21,6 +29,7 @@ const shopController = {
         )
 
     },
+<<<<<<< HEAD
     buy:async(req,res)=>{
         try {
             let {priceCard,titleCard} = req.body
@@ -39,6 +48,10 @@ const shopController = {
         } catch (err) {
             res.status(400).send(err)
         }
+=======
+    buy:(req,res)=>{
+        console.log(req.body);
+>>>>>>> #feature : add shopping center route and design it
     }
 
 

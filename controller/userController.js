@@ -8,7 +8,6 @@ mongodb = require('mongodb')
 gridfsbucket = mongodb.GridFSBucket
 
 
-
 var bucket
 conn.once("open", function () {
 	bucket = new gridfsbucket(conn.db, {
@@ -22,14 +21,14 @@ conn.once("open", function () {
 
 
 const controller = {
-	signUp: async (req, res) => {
+	signUp: async(req, res) => {
 		try {
 			let { userName, phone, email, password } = req.body
 			let existInDataBase = signUpControl(userName, phone, email)
 			if (existInDataBase == true) {
 				await res
-					.status(400)
-					.send("your data exist in database please set another data")
+				.status(400)
+				.send("your data exist in database please set another data")
 				return
 			} else {
 				let salt = await bcrypt.genSalt(10)
@@ -60,6 +59,11 @@ const controller = {
 					newPerson.imageAddress.filename = req.file.filename
 				}
 
+				if(req.file){
+					newPerson.imageAddress.id= req.file.id
+					newPerson.imageAddress.filename = req.file.filename
+				}
+
 				await newPerson.save()
 
 				conn.collection('userImages.files').findOneAndUpdate(
@@ -82,7 +86,6 @@ const controller = {
 				})
 
 			}
-
 		} catch (err) {
 			console.error(err)
 			res.status(400).send(err)

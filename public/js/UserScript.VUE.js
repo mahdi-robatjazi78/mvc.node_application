@@ -2,6 +2,14 @@ $(document).ready(function () {
 
 	const fetch_Users_Info = () => {
 		$.get("/userList/fetch", function ({ data, count }) {
+
+			
+			// component vue for showing user-image
+			Vue.component("user-image" , {
+				props:['srcc'],
+				template:"<img src=/image/user/{{srcc}} />"
+			})
+
 			var table = new Vue({
 				el: "#table",
 				data: {
