@@ -1,59 +1,50 @@
-const userModel = require("../db/model/UserModel")
-const bcrypt = require("bcryptjs")
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+const {conn} = require('../db/connection/connect')
+const {get_date_time , signUpControl} = require('./server.extending')
+	userModel = require("../db/model/UserModel")
+	bcrypt = require("bcryptjs")
+	jwt = require('jsonwebtoken')
+	require('dotenv').config()
+	mongodb = require('mongodb')
+	gridfsbucket = mongodb.GridFSBucket
+	
 
-const d = new Date()
-let date = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
-let time = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
 
-const signUpControl = async (userName, phone, email) => {
-	try {
-		let checkUserName = await userModel.findOne({ userName })
-		let checkUserPhone = await userModel.findOne({ phone })
-		let checkUserEmail = await userModel.findOne({ email })
+var bucket
+conn.once("open", function () {
+	bucket = new gridfsbucket(conn.db,{
+		bucketName : 'userImages'
+	})
+	console.log("we're connected!")
+})
 
-		if (checkUserEmail) {
-			console.log("your user Email already been saved")
-			return true
-		} else if (checkUserPhone) {
-			console.log("your user Phone already been saved")
-			return true
-		} else if (checkUserName) {
-			console.log("your user Name already been saved")
-			return true
-		} else {
-			return false
-		}
-	} catch (error) {
-		console.error(error)
-	}
-}
+
+
+
 
 const controller = {
-	signUp: async (req, res) => {
+	signUp: async(req, res) => {
 		try {
-			
 			let { userName, phone, email, password } = req.body 
-
-			let existInDataBase = await signUpControl(userName, phone, email)
+			let existInDataBase = signUpControl(userName, phone, email)
 			if (existInDataBase == true) {
 				await res
-					.status(400)
-					.send("your data exist in database please set another data")
+				.status(400)
+				.send("your data exist in database please set another data")
 				return
 			} else {
-
 				let salt = await bcrypt.genSalt(10)
 				let hash = await bcrypt.hash(password, salt)
-
+				
+				var datetime = get_date_time()
+				
+				
 				const newPerson = new userModel({
 					userName,
 					phone,
 					email,
 					password: hash,
-					signUpDate: date,
-					signUpTime: time,
+					signUpDate: datetime.date,
+					signUpTime: datetime.time
 				})
 
 
@@ -64,16 +55,36 @@ const controller = {
 
 				newPerson.tokens.push({token})
 
+				if(req.file){
+					newPerson.imageAddress.id= req.file.id
+					newPerson.imageAddress.filename = req.file.filename
+				}
+
 				await newPerson.save()
+				
+				conn.collection('userImages.files').findOneAndUpdate(
+					{_id:req.file.id},
+					{
+						$set:{
+							metadata:{
+								userId : newPerson._id
+							}
+						}
+					}
+				)
+
 				res.status(200).json({
 					msg:'you are signUp now ; and you into our userList. congratulations',
 					userName:newPerson.userName,
+					cash:newPerson.cash,
 					token
 				})
 				
 			}
+			
 		} catch (err) {
 			console.error(err)
+			res.status(400).send(err)
 		}
 	},
 	fetchAllData: async (req, res) => {
@@ -141,7 +152,7 @@ const controller = {
 			user.tokens.push({
 				token
 			})
-			res.status(200).json({token,userName:user.userName,msg:'you are login now congratulations! your cash is 1000$. free money for you'})
+			res.status(200).json({token,userName:user.userName,cash:user.cash,msg:'you are login now congratulations! your cash is 250$. free money for you'})
 			return user.save()
 			
         } catch (err) {
@@ -149,6 +160,10 @@ const controller = {
 			res.status(400).send(err)
         }
 	},
+	getUserImage : async(req,res)=>{
+		const downloadStream = bucket.openDownloadStreamByName(req.params.filename)
+		downloadStream.pipe(res)
+	}
 
 }
 

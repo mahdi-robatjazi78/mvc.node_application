@@ -1,4 +1,4 @@
-const mongoose = require("../connection/connect")
+const {mongoose,conn} = require("../connection/connect")
 const timestamps = require("mongoose-timestamp")
 
 const UserSchema = new mongoose.Schema({
@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
 	signUpTime: String,
 	cash:{
 		type:Number,
-		default:1000
+		default:250
 	},
 	tokens: [
         { 
@@ -18,11 +18,14 @@ const UserSchema = new mongoose.Schema({
             access:String,
             token: String,
         }
-    ],
+	],
+	imageAddress:{
+		_id:false,
+		id:String,
+		filename:String,
+	}
+	
 })
-
 UserSchema.plugin(timestamps)
-
-const userModel = mongoose.model("user", UserSchema)
-
+const userModel = conn.model("user", UserSchema)
 module.exports = userModel

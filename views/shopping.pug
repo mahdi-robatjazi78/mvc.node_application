@@ -1,7 +1,36 @@
 include layout.pug
+style.
+    .card{
+        width:18em;
+        color:#cc0000;
+        font-weight:bold
+
+    }
+script(src="/js/ShoppingScript.JQ.js")
 body(style="background-color:#e1e1e1;color:black")
     include header.pug
 
-    h1 this is shopping page
+    main
+
+        .row
+            each item in data
+                .col
+                    .card
+                        .row
+                            .col.col-5
+                                .card-head
+                                    .row
+                                        img(src=`/images/${item.category}/${item.commodity_name}.svg` width="100px")
+                                    .row
+                                        button(onclick=`showdata()`).btn.btn-primary.btn-block sell me
+                            .col
+                                .card-body
+                                    p.card-title=item.commodity_name
+                                    p.card-title=item.price+`$`
+                                    p.text-dark.card-title=item.category
+                                    p.text-dark.card-title=` seller : `+ item.seller
+
+
 
     include footer.pug
+
