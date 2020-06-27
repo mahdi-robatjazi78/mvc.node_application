@@ -5,6 +5,7 @@ $(document).ready(function () {
 
 			
 			// component vue for showing user-image my problem is here !!!!!!!!!!!!!!!!!!!!
+
 			Vue.component("user-image" , {
 				props:['srcc'],
 				template:"<img src=/image/user/{{srcc}} />"
