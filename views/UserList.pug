@@ -35,10 +35,7 @@ body
                             div(v-if="!user.imageAddress")
                                 img(src="/images/user_logo.png" width="30px")
                             div(v-else)
-
-                                //- component vue for showing <user-image> my problem is here!!!!!!!!!!!!
-                                user-image(v-bind:srcc="user.imageAddress.filename")
-                                    
+                                img(:src="'http://localhost:3000/image/user/'+user.imageAddress.filename" width="50px")
 
                         td {{user.signUpDate +'___'+ user.signUpTime}}
                         td
