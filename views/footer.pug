@@ -2,7 +2,7 @@ hr
 footer
     .d-flex
         div
-            p(style="margin:0") programmer : mahdi_Robatjazi
+            p(style="margin:0") programmer : mahdi_Robatjazi.
             small
                 i(style="margin-left:20px") All rights reserved.
 
@@ -12,11 +12,16 @@ footer
                     img(src="/images/user_logo.png" alt="userLogo" width="40px")
             .row.mr-3
                 small
-                    i
-                        script.
-                            document.write(
-                                localStorage.getItem('userName')||
-                                sessionStorage.getItem('userName')||
-                                'you are not login'
-                            )
-        
+                    .col
+                        i#data
+
+                            
+                            
+                            
+                                    
+
+    script.
+        $('#data').html(localStorage.getItem('userName')||
+                        sessionStorage.getItem('userName')||
+                        'you are not login')
+            

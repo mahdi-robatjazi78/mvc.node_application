@@ -1,4 +1,4 @@
-const mongoose = require('../connection/connect')
+const {mongoose} = require('../connection/connect')
 const timestamps = require('mongoose-timestamp')
 
 const TodoSchema = new mongoose.Schema({

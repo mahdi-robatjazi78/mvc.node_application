@@ -2,6 +2,14 @@ $(document).ready(function () {
 
 	const fetch_Users_Info = () => {
 		$.get("/userList/fetch", function ({ data, count }) {
+
+			
+			// component vue for showing user-image
+			Vue.component("user-image" , {
+				props:['srcc'],
+				template:"<img src=/image/user/{{srcc}} />"
+			})
+
 			var table = new Vue({
 				el: "#table",
 				data: {
@@ -10,6 +18,12 @@ $(document).ready(function () {
 					textSearch: null,
 				},
 				methods: {
+					//get userImageSource
+					getImageSource:function(user){
+						var address ="image/user/"+user.filename
+						console.log(address);
+						return address
+					},
 					//remove Users
 					RemoveUser: function (user) {
 						const result = confirm("you sure ?? you creazy???")
@@ -87,19 +101,22 @@ $(document).ready(function () {
 					})
 			},
 			AddNewUser: function () {
-				let info = {
-					userName: this.userName,
-					phone: this.phone,
-					email: this.email,
-					password: this.password,
-				}
+				
+				var formdata = new FormData(document.getElementById('form-data'))
+
+				formdata.append('userName' , this.userName)
+				formdata.append('phone' , this.phone)
+				formdata.append('email' , this.email)
+				formdata.append('password' , this.password)
+
 
 				// SIGNUP NEW USER
 				$.ajax({
 					method: "post",
 					url: "/userList/signUp",
-					contentType:"application/json",
-					data: JSON.stringify(info),
+					processData: false,
+					contentType: false,					
+					data: formdata,
 					success:function(res){
 						Success=true
 						login.saveUserToken(res)
@@ -152,9 +169,11 @@ $(document).ready(function () {
 
 					localStorage.setItem("x-auth",data.token)
 					localStorage.setItem("userName",data.userName)
+					localStorage.setItem("cash",data.cash)
 				} else {
 					sessionStorage.setItem("x-auth",data.token)
 					sessionStorage.setItem("userName",data.userName)
+					sessionStorage.setItem("cash",data.cash)
 				}
 			}
 		}

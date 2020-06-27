@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
 const bodyParser = require("body-parser")
-const appRouter = require("./routes")
+const appRouter = require("./routes/index.routes")
 
 require("dotenv").config()
 

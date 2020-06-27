@@ -1,8 +1,7 @@
 const mongoose = require("mongoose")
 mongoose.Promise = global.Promise
 require("dotenv").config()
-
-mongoose.connect(
+const conn = mongoose.createConnection(
 	`${process.env.MONGO_URI}${process.env.MONGO_PORT}/${process.env.DB_NAME}`,
 	{
 		useNewUrlParser: true,
@@ -11,10 +10,9 @@ mongoose.connect(
 	}
 )
 
-var db = mongoose.connection
-db.on("error", console.error.bind(console, "connection error:"))
-db.once("open", function () {
-  console.log("we're connected!")
-})
 
-module.exports = mongoose
+conn.on("error", console.error.bind(console, "connection error:"))
+
+
+
+module.exports = {mongoose, conn}

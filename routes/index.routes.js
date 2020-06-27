@@ -1,5 +1,5 @@
 const router = require('express').Router()
-
+const userController = require('../controller/userController')
 
 const mainRoute = require('./home.routes')
 const UserRoute = require('./User.routes')
@@ -14,6 +14,9 @@ router.use('/userList',UserRoute)
 router.use('/about',AboutRoute)
 router.use('/todoList',TodoRoute)
 router.use('/shopping',shopRoute)
+
+
+router.get('/image/user/:filename',userController.getUserImage)
 
 
 module.exports = router 
