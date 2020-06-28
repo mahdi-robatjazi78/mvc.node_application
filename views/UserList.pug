@@ -37,6 +37,7 @@ body
                             div(v-else)
                                 img(:src="'http://localhost:3000/image/user/'+user.imageAddress.filename" width="50px")
 
+
                         td {{user.signUpDate +'___'+ user.signUpTime}}
                         td
                             img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
