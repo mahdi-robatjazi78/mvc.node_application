@@ -21,14 +21,14 @@ conn.once("open", function () {
 
 
 const controller = {
-	signUp: async(req, res) => {
+	signUp: async (req, res) => {
 		try {
 			let { userName, phone, email, password } = req.body
 			let existInDataBase = signUpControl(userName, phone, email)
 			if (existInDataBase == true) {
 				await res
-				.status(400)
-				.send("your data exist in database please set another data")
+					.status(400)
+					.send("your data exist in database please set another data")
 				return
 			} else {
 				let salt = await bcrypt.genSalt(10)
@@ -59,8 +59,8 @@ const controller = {
 					newPerson.imageAddress.filename = req.file.filename
 				}
 
-				if(req.file){
-					newPerson.imageAddress.id= req.file.id
+				if (req.file) {
+					newPerson.imageAddress.id = req.file.id
 					newPerson.imageAddress.filename = req.file.filename
 				}
 
@@ -156,14 +156,12 @@ const controller = {
 			user.tokens.push({
 				token
 			})
-
 			res.status(200).json({
 				userName: user.userName,
 				imageFilename:user.imageAddress.filename,
 				cash: user.cash,
 				token,
 				msg: 'you are login now congratulations! your cash is 250$. free money for you' })
-
 			return user.save()
 
 		} catch (err) {
