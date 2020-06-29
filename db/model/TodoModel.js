@@ -1,4 +1,4 @@
-const {mongoose} = require('../connection/connect')
+const {mongoose , conn} = require('../connection/connect')
 const timestamps = require('mongoose-timestamp')
 
 const TodoSchema = new mongoose.Schema({
@@ -11,6 +11,6 @@ const TodoSchema = new mongoose.Schema({
 
 TodoSchema.plugin(timestamps)
 
-const todoModel = mongoose.model('tasks',TodoSchema)
+const todoModel = conn.model('tasks',TodoSchema)
 
 module.exports = {todoModel}

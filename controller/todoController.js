@@ -1,9 +1,6 @@
 const {todoModel} = require('../db/model/TodoModel')
+const {get_date_time} =require('./server.extending')
 
-
-let d = new Date()
-let date = d.getFullYear() + '/0' + (d.getMonth()+1) + '/' + d.getDate()
-let time = d.getHours() +':'+ d.getMinutes() +':'+ d.getSeconds()
 
 
 
@@ -29,11 +26,13 @@ const todoController = {
             const body = req.body
             const userId = req.user._id
 
+            var datetime = get_date_time()
+
             const newTask = new todoModel({
                 todo : body.todo,
                 isDone : false,
-                time,
-                date,
+                time:datetime.time,
+                date:datetime.date,
                 userId
             })
             await newTask.save()
@@ -41,7 +40,8 @@ const todoController = {
             
         } catch (err) {
             console.error(err);            
-        }
+            res.status(400).send(err)
+        }   
     },
     removeTask : async(req,res)=>{
         try {
@@ -86,7 +86,7 @@ const todoController = {
         try {
             let allTasks = await todoModel.find({isDone:false,userId:req.user._id})
             let count = allTasks.length
-            await res.send({allTasks,count})
+            res.status(200).send({allTasks,count})
         } catch (err) {
             console.log(err);
         }

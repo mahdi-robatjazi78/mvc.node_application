@@ -1,18 +1,18 @@
-const {conn} = require('../db/connection/connect')
-const {get_date_time , signUpControl} = require('./server.extending')
+const { conn } = require('../db/connection/connect')
+const { get_date_time, signUpControl } = require('./server.extending')
 	userModel = require("../db/model/UserModel")
 	bcrypt = require("bcryptjs")
 	jwt = require('jsonwebtoken')
-	require('dotenv').config()
 	mongodb = require('mongodb')
 	gridfsbucket = mongodb.GridFSBucket
-	
+require('dotenv').config()
+
 
 
 var bucket
 conn.once("open", function () {
-	bucket = new gridfsbucket(conn.db,{
-		bucketName : 'userImages'
+	bucket = new gridfsbucket(conn.db, {
+		bucketName: 'userImages'
 	})
 	console.log("we're connected!")
 })
@@ -22,22 +22,22 @@ conn.once("open", function () {
 
 
 const controller = {
-	signUp: async(req, res) => {
+	signUp: async (req, res) => {
 		try {
-			let { userName, phone, email, password } = req.body 
+			let { userName, phone, email, password } = req.body
 			let existInDataBase = signUpControl(userName, phone, email)
 			if (existInDataBase == true) {
 				await res
-				.status(400)
-				.send("your data exist in database please set another data")
+					.status(400)
+					.send("your data exist in database please set another data")
 				return
 			} else {
 				let salt = await bcrypt.genSalt(10)
 				let hash = await bcrypt.hash(password, salt)
-				
+
 				var datetime = get_date_time()
-				
-				
+
+
 				const newPerson = new userModel({
 					userName,
 					phone,
@@ -49,39 +49,40 @@ const controller = {
 
 
 				const token = jwt.sign({
-					_id:newPerson._id.toHexString(),
-					access:'auth'
-				},process.env.JWT_SECRET_KEY).toString()
+					_id: newPerson._id.toHexString(),
+					access: 'auth'
+				}, process.env.JWT_SECRET_KEY).toString()
 
-				newPerson.tokens.push({token})
+				newPerson.tokens.push({ token })
 
-				if(req.file){
-					newPerson.imageAddress.id= req.file.id
+				if (req.file) {
+					newPerson.imageAddress.id = req.file.id
 					newPerson.imageAddress.filename = req.file.filename
 				}
 
 				await newPerson.save()
-				
+
 				conn.collection('userImages.files').findOneAndUpdate(
-					{_id:req.file.id},
+					{ _id: req.file.id },
 					{
-						$set:{
-							metadata:{
-								userId : newPerson._id
+						$set: {
+							metadata: {
+								userId: newPerson._id
 							}
 						}
 					}
 				)
 
 				res.status(200).json({
-					msg:'you are signUp now ; and you into our userList. congratulations',
-					userName:newPerson.userName,
-					cash:newPerson.cash,
+					msg: 'you are signUp now ; and you into our userList. congratulations',
+					userName: newPerson.userName,
+					imageFilename: req.file.filename,
+					cash: newPerson.cash,
 					token
 				})
-				
+
 			}
-			
+
 		} catch (err) {
 			console.error(err)
 			res.status(400).send(err)
@@ -125,44 +126,53 @@ const controller = {
 			console.error(err)
 		}
 	},
-	loginUser:  async(req, res) => {
+	loginUser: async (req, res) => {
 		try {
-			const {email,password} = req.body
-			let user = await userModel.findOne({email})
-			
-			if(!user){
+			const { email, password } = req.body
+			let user = await userModel.findOne({ email })
+
+			if (!user) {
 				console.log(`your email not found in our database`)
-				return res.status(400).json({err:`your email not found in our database`})
+				return res.status(400).json({ err: `your email not found in our database` })
 			}
 
-			let result = await bcrypt.compare(password,user.password)
+			let result = await bcrypt.compare(password, user.password)
 
-			if(!result){
+			if (!result) {
 				console.log('your password is incorrect please enter another password');
-				return res.status(400).json({err:'your password is incorrect please enter another password'})
+				return res.status(400).json({ err: 'your password is incorrect please enter another password' })
 			}
 
 			//GENEARATION TOKEN: _one day for expiration token ((60 minute * 60 seconds)*24 hours)
 
 			let token = jwt.sign({
 				_id: user._id.toHexString(),
-				access:'auth'
-			},process.env.JWT_SECRET_KEY,{expiresIn:(60*60)*24}).toString()
+				access: 'auth'
+			}, process.env.JWT_SECRET_KEY, { expiresIn: (60 * 60) * 24 }).toString()
 
 			user.tokens.push({
 				token
 			})
-			res.status(200).json({token,userName:user.userName,cash:user.cash,msg:'you are login now congratulations! your cash is 250$. free money for you'})
+			res.status(200).json({
+				userName: user.userName,
+				imageFilename:user.imageAddress.filename,
+				cash: user.cash,
+				token,
+				msg: 'you are login now congratulations! your cash is 250$. free money for you' })
 			return user.save()
-			
-        } catch (err) {
+
+		} catch (err) {
 			console.error(err);
 			res.status(400).send(err)
-        }
+		}
 	},
-	getUserImage : async(req,res)=>{
-		const downloadStream = bucket.openDownloadStreamByName(req.params.filename)
-		downloadStream.pipe(res)
+	getUserImage:async(req, res) => {
+		try {
+			const downloadStream = await bucket.openDownloadStreamByName(req.params.filename)
+				downloadStream.pipe(res)
+		} catch (err) {
+			res.status(400).send(err)			
+		}
 	}
 
 }
