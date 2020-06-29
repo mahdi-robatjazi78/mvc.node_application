@@ -10,8 +10,6 @@ $(document).ready(function () {
 			console.error(err)
 		}
 	}
-
-
 	var editMode = false
 	var oldTask = undefined
 
@@ -90,9 +88,11 @@ $(document).ready(function () {
 		})
 	}
 
-	$(".fetch,.all,.disable,.enabled").click(function (e) {
-		let fetchStatus = $(this).attr("value")
 
+
+	// SHOW TASKS
+	$(".fetch,.all,.disable,.enabled").on("click",function (e) {
+		let fetchStatus = $(this).attr("value")
 		$("#tbody").html("")
 		var tasks = []
 		$.ajax({
@@ -102,7 +102,6 @@ $(document).ready(function () {
 			success: function (data, status, xhr) {
 				if (data.count == 0) {
 					alert("please first enter a task and then see it")
-					// $('.display-3').show().text('please first enter a task and then see it')
 					return
 				}
 				// TASKS COUNT

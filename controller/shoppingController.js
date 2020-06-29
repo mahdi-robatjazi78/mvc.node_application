@@ -1,8 +1,6 @@
 const userModel = require('../db/model/UserModel')
 const fs = require('fs');
-const { url } = require('inspector');
 const path = require('path')
-
 
 
 // this api write with primise not usage_await
@@ -23,8 +21,24 @@ const shopController = {
         )
 
     },
-    buy:(req,res)=>{
-        console.log(req.body);
+    buy:async(req,res)=>{
+        try {
+            let {priceCard,titleCard} = req.body
+            let pricecard=priceCard.replace("$",'')
+            let PriceCard=Number(pricecard)
+
+
+            let user = await userModel.findByIdAndUpdate(req.user._id,{
+                $inc:{
+                    cash:-PriceCard
+                }
+            })
+
+            res.status(200).json({cash:user.cash-PriceCard})
+
+        } catch (err) {
+            res.status(400).send(err)
+        }
     }
 
 

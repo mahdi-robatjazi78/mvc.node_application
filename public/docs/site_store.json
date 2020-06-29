@@ -1,107 +1,125 @@
 [
   {
+    "id":1,
     "commodity_name":"cheese",
     "price":20,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":2,
     "commodity_name":"egg",
     "price":4,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":3,
     "commodity_name":"fast-food",
     "price":22,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":4,
     "commodity_name":"fish",
     "price":120,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":5,
     "commodity_name":"meat",
     "price":70,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":6,
     "commodity_name":"pizza",
     "price":34,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":7,
     "commodity_name":"sausages",
     "price":10,
     "seller":"m_r.",
     "category":"food"
   },
   {
+    "id":8,
     "commodity_name":"apple",
     "price":8,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
-    "commodity_name":"bananas",
+    "id":9,
+    "commodity_name":"banana",
     "price":19,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
+    "id":10,
     "commodity_name":"mango",
     "price":27,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
+    "id":11,
     "commodity_name":"pear",
     "price":15,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
+    "id":12,
     "commodity_name":"pineapple",
     "price":38,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
+    "id":13,
     "commodity_name":"watermelon",
     "price":21,
     "seller":"m_r.",
     "category":"fruits"
   },
   {
+    "id":14,
     "commodity_name":"bell-pepper",
     "price":11,
     "seller":"m_r.",
     "category":"vegetables"
   },
   {
+    "id":15,
     "commodity_name":"broccoli",
     "price":32,
     "seller":"m_r.",
     "category":"vegetables"
   },
   {
+    "id":16,
     "commodity_name":"eggplant",
     "price":19,
     "seller":"m_r.",
     "category":"vegetables"
   },
   {
+    "id":17,
     "commodity_name":"salad",
     "price":47,
     "seller":"m_r.",
     "category":"vegetables"
   },
   {
+    "id":18,
     "commodity_name":"spinach",
     "price":38,
     "seller":"m_r.",

@@ -1,11 +1,16 @@
 const {mongoose,conn} = require("../connection/connect")
 const timestamps = require("mongoose-timestamp")
 
+const defaultOptionUserSchema = {
+	type:String,
+	trim:true,
+}
+
 const UserSchema = new mongoose.Schema({
-	userName: String,
-	phone: String,
-	email: String,
-	password: String,
+	userName: defaultOptionUserSchema,
+	phone: defaultOptionUserSchema,
+	email: defaultOptionUserSchema,
+	password: defaultOptionUserSchema,
 	signUpDate: String,
 	signUpTime: String,
 	cash:{
@@ -13,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 		default:250
 	},
 	tokens: [
-        { 
+        {
 			_id:false,
             access:String,
             token: String,
@@ -24,7 +29,6 @@ const UserSchema = new mongoose.Schema({
 		id:String,
 		filename:String,
 	}
-	
 })
 UserSchema.plugin(timestamps)
 const userModel = conn.model("user", UserSchema)

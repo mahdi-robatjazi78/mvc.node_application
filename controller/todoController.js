@@ -41,7 +41,8 @@ const todoController = {
             
         } catch (err) {
             console.error(err);            
-        }
+            res.status(400).send(err)
+        }   
     },
     removeTask : async(req,res)=>{
         try {
@@ -86,7 +87,7 @@ const todoController = {
         try {
             let allTasks = await todoModel.find({isDone:false,userId:req.user._id})
             let count = allTasks.length
-            await res.send({allTasks,count})
+            res.status(200).send({allTasks,count})
         } catch (err) {
             console.log(err);
         }

@@ -156,14 +156,19 @@ $(document).ready(function () {
 					}
 				})
 			},
-			saveUserToken: function (data, permanent=60*60*60) {
+			saveUserToken: function (data, permanent) {
+				localStorage.clear()
+				sessionStorage.clear()
 				if (permanent) {
 
 					localStorage.setItem("x-auth",data.token)
+					localStorage.setItem("imageFilename",data.imageFilename)
 					localStorage.setItem("userName",data.userName)
 					localStorage.setItem("cash",data.cash)
-				} else {
+				
+				}else{
 					sessionStorage.setItem("x-auth",data.token)
+					sessionStorage.setItem("imageFilename",data.imageFilename)
 					sessionStorage.setItem("userName",data.userName)
 					sessionStorage.setItem("cash",data.cash)
 				}
