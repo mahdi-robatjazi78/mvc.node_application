@@ -1,11 +1,12 @@
-const { conn } = require('../db/connection/connect')
+const { mongoose,conn } = require('../db/connection/connect')
 const { get_date_time, signUpControl } = require('./server.extending')
-userModel = require("../db/model/UserModel")
-bcrypt = require("bcryptjs")
-jwt = require('jsonwebtoken')
+	userModel = require("../db/model/UserModel")
+	bcrypt = require("bcryptjs")
+	jwt = require('jsonwebtoken')
+	mongodb = require('mongodb')
+	gridfsbucket = mongodb.GridFSBucket
 require('dotenv').config()
-mongodb = require('mongodb')
-gridfsbucket = mongodb.GridFSBucket
+
 
 
 var bucket
@@ -15,10 +16,6 @@ conn.once("open", function () {
 	})
 	console.log("we're connected!")
 })
-
-
-
-
 
 const controller = {
 	signUp: async (req, res) => {
@@ -53,11 +50,6 @@ const controller = {
 				}, process.env.JWT_SECRET_KEY).toString()
 
 				newPerson.tokens.push({ token })
-
-				if (req.file) {
-					newPerson.imageAddress.id = req.file.id
-					newPerson.imageAddress.filename = req.file.filename
-				}
 
 				if (req.file) {
 					newPerson.imageAddress.id = req.file.id
@@ -102,7 +94,17 @@ const controller = {
 	},
 	removeUser: async (req, res) => {
 		try {
-			await userModel.findByIdAndDelete(req.body._id)
+			const user =await userModel.findById(req.body._id)
+			if(!user){
+				return res.status(404).send("this user not found!!! in our database")
+			}
+			if(user.imageAddress){
+				let obj_id = new mongoose.Types.ObjectId(user.imageAddress.id)
+				bucket.delete(obj_id)
+				await userModel.findByIdAndDelete(req.body._id)
+			}else{
+				await userModel.findByIdAndDelete(req.body._id)
+			}
 
 			await res.end()
 		} catch (err) {
@@ -161,7 +163,8 @@ const controller = {
 				imageFilename:user.imageAddress.filename,
 				cash: user.cash,
 				token,
-				msg: 'you are login now congratulations! your cash is 250$. free money for you' })
+				msg: 'you are login now congratulations!' 
+			})
 			return user.save()
 
 		} catch (err) {
@@ -169,9 +172,13 @@ const controller = {
 			res.status(400).send(err)
 		}
 	},
-	getUserImage: async (req, res) => {
-		const downloadStream = bucket.openDownloadStreamByName(req.params.filename)
-		downloadStream.pipe(res)
+	getUserImage:async(req, res) => {
+		try {
+			const downloadStream = await bucket.openDownloadStreamByName(req.params.filename)
+			downloadStream.pipe(res)
+		} catch (err) {
+			res.status(400).send(err)			
+		}
 	}
 
 }
