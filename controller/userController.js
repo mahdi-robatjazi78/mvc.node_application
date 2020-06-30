@@ -1,11 +1,12 @@
 const { conn } = require('../db/connection/connect')
 const { get_date_time, signUpControl } = require('./server.extending')
-userModel = require("../db/model/UserModel")
-bcrypt = require("bcryptjs")
-jwt = require('jsonwebtoken')
+	userModel = require("../db/model/UserModel")
+	bcrypt = require("bcryptjs")
+	jwt = require('jsonwebtoken')
+	mongodb = require('mongodb')
+	gridfsbucket = mongodb.GridFSBucket
 require('dotenv').config()
-mongodb = require('mongodb')
-gridfsbucket = mongodb.GridFSBucket
+
 
 
 var bucket
@@ -53,11 +54,6 @@ const controller = {
 				}, process.env.JWT_SECRET_KEY).toString()
 
 				newPerson.tokens.push({ token })
-
-				if (req.file) {
-					newPerson.imageAddress.id = req.file.id
-					newPerson.imageAddress.filename = req.file.filename
-				}
 
 				if (req.file) {
 					newPerson.imageAddress.id = req.file.id
@@ -169,9 +165,13 @@ const controller = {
 			res.status(400).send(err)
 		}
 	},
-	getUserImage: async (req, res) => {
-		const downloadStream = bucket.openDownloadStreamByName(req.params.filename)
-		downloadStream.pipe(res)
+	getUserImage:async(req, res) => {
+		try {
+			const downloadStream = await bucket.openDownloadStreamByName(req.params.filename)
+				downloadStream.pipe(res)
+		} catch (err) {
+			res.status(400).send(err)			
+		}
 	}
 
 }

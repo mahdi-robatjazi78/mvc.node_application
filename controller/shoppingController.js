@@ -2,24 +2,30 @@ const userModel = require('../db/model/UserModel')
 const fs = require('fs');
 const path = require('path')
 
+
+// this api write with promise not usage_await
 const shopController = {
-    shoppingPage:(req,res)=>{
-        fs.readFile( 
-            path.join(__dirname,'../'+process.env.JSON_FILE_PATH_FOR_SHPPING_CENTER),
-            'utf8',
-            function(err,data){
-                if(err)console.log(err);
-                else{
-
-                    res.render('shopping',{data:JSON.parse(data)})
-
+    shoppingPage:async(req,res)=>{
+        try {
+            
+            fs.readFile( 
+                path.join(__dirname,'../'+process.env.JSON_FILE_PATH_FOR_SHPPING_CENTER),
+                'utf8',
+                function(err,data){
+                    if(err)console.log(err);
+                    else{
+    
+                        res.render('shopping',{data:JSON.parse(data)})
+    
+                    }
+    
                 }
-
-            }
-        )
+            )
+        } catch (err) {
+            console.error(err);
+        }
 
     },
-
     buy:async(req,res)=>{
         try {
             let {priceCard,titleCard} = req.body
@@ -39,6 +45,9 @@ const shopController = {
             res.status(400).send(err)
         }
     }
+
+
+           
 }
 
 
