@@ -25,13 +25,11 @@ footer
         
         var imageFilename = window.localStorage.getItem('imageFilename') 
                             ||window.sessionStorage.getItem('imageFilename')
+    
 
 
-        if(imageFilename===undefined){
-            $('#userLogo').attr("src","images/user_logo.png")
+        if(imageFilename=="undefined"||imageFilename==undefined){
+            $('#userLogo').attr("src","/images/user_logo.png")
         }else{
-            $('#userLogo').attr("src",`http://localhost:3000/image/user/${imageFilename}`)
-
+            $('#userLogo').attr("src",`http://localhost:80/image/user/${imageFilename}`)
         }   
-        
-            

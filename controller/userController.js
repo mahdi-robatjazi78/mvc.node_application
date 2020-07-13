@@ -1,6 +1,6 @@
 const { mongoose,conn } = require('../db/connection/connect')
 const { get_date_time, signUpControl } = require('./server.extending')
-	userModel = require("../db/model/UserModel")
+	userModel = require('../db/model/UserModel')
 	bcrypt = require("bcryptjs")
 	jwt = require('jsonwebtoken')
 	mongodb = require('mongodb')
@@ -57,17 +57,18 @@ const controller = {
 				}
 
 				await newPerson.save()
-
-				conn.collection('userImages.files').findOneAndUpdate(
-					{ _id: req.file.id },
-					{
-						$set: {
-							metadata: {
-								userId: newPerson._id
+				if(req.file){
+					conn.collection('userImages.files').findOneAndUpdate(
+						{ _id: req.file.id },
+						{
+							$set: {
+								metadata: {
+									userId: newPerson._id
+								}
 							}
 						}
-					}
-				)
+					)
+				}
 
 				res.status(200).json({
 					msg: 'you are signUp now ; and you into our userList. congratulations',
@@ -99,7 +100,7 @@ const controller = {
 				return res.status(404).send("this user not found!!! in our database")
 			}
 			if(user.imageAddress){
-				let obj_id = new mongoose.Types.ObjectId(user.imageAddress.id)
+				let obj_id = await new mongoose.Types.ObjectId(user.imageAddress.id)
 				bucket.delete(obj_id)
 				await userModel.findByIdAndDelete(req.body._id)
 			}else{
@@ -174,10 +175,32 @@ const controller = {
 	},
 	getUserImage:async(req, res) => {
 		try {
-			const downloadStream = await bucket.openDownloadStreamByName(req.params.filename)
+			const address = req.params.filename
+			// console.log(address);
+			const downloadStream = await bucket.openDownloadStreamByName(address)
 			downloadStream.pipe(res)
 		} catch (err) {
 			res.status(400).send(err)			
+		}
+	},
+	logout:async (req, res) => {
+		try{
+			let user = await userModel.findOneAndUpdate({
+				_id:req.user._id
+			},{
+				$pull:{
+					tokens:{
+						token:req.token
+					}
+				}
+			})
+
+			if(user){
+				return res.status(200).send("user logout operation successfully is done")
+			}	
+			reject(user)
+		}catch(err){
+			res.staus(500).send(err)
 		}
 	}
 
