@@ -1,14 +1,11 @@
 include layout.pug
 script(src="/js/UserScript.VUE.js")
 script.
-    var urlParams = new URLSearchParams(window.location.search)
-    var msg = urlParams.get('msg')
+
     var isLogin = window.localStorage.getItem('x-auth')
 body
     include ./header.pug
     main#table.mt-5
-        p.mb-4.display-4.text-dark.text-center#msg= isLogin
-
         .container.d-flex.justify-content-between
             h2.mb-3.text-dark count : {{count}}
             input(type="text",class="form-control col-5",placeholder="search in userNames",
@@ -35,7 +32,7 @@ body
                             div(v-if="!user.imageAddress")
                                 img(src="/images/user_logo.png" width="30px")
                             div(v-else)
-                                img(:src="'http://localhost:3000/image/user/'+user.imageAddress.filename"
+                                img(:src="'http://localhost:80/image/user/'+user.imageAddress.filename"
                                     width="60px"
                                     height="50px")
 
@@ -50,6 +47,7 @@ body
         
         
         
+
         
         .collapse#collapseExample
             form.row(class="form")

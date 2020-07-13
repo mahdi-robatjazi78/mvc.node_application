@@ -8,15 +8,18 @@ const TodoRoute = require('./todos.routes')
 const shopRoute = require('./shopping.routes')
 
 
-
 router.use('/',mainRoute)
 router.use('/userList',UserRoute)
 router.use('/about',AboutRoute)
 router.use('/todoList',TodoRoute)
 router.use('/shopping',shopRoute)
 
-
 router.get('/image/user/:filename',userController.getUserImage)
 
+
+
+router.all('*',(req,res)=>{
+    res.render("404.pug")
+})
 
 module.exports = router 

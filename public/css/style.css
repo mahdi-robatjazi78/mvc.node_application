@@ -25,10 +25,14 @@ header{
 	background-color:#c8c8c8;
 	border-bottom:2px dotted rgb(136, 136, 136)
 }
-
+#logout_button{
+	position: absolute;
+	right:50px;	
+	top:5px;
+}
 .nav-link{
 	font-size:.8em;
-	display:flex;
+	display:inline-flex;
 	flex-direction: row;
 	/* justify-content: space-around; */
 	/* padding:20px 20px; */
@@ -36,7 +40,7 @@ header{
 	cursor: pointer;
 }
 .nav-link a{
-	color:rgb(168, 0, 0);
+	color:rgb(80, 78, 0);
 	font-size:1.3em;
 	padding-left: 50px;
 	font-weight: bold;
