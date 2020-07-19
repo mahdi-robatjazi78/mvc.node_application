@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
 		default:250
 	},
 	tokens: [
-        {
+		{
 			_id:false,
             access:String,
             token: String,
@@ -28,8 +28,17 @@ const UserSchema = new mongoose.Schema({
 		_id:false,
 		id:String,
 		filename:String,
+	},
+	owned_Groups:{
+		_id:false,
+		type:Array
+	},
+	joined_Groups:{
+		_id:false,
+		type:Array
 	}
 })
 UserSchema.plugin(timestamps)
 const userModel = conn.model("user", UserSchema)
 module.exports = userModel
+

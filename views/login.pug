@@ -1,0 +1,20 @@
+include layout.pug
+script(type="text/javascript" src="/js/UserProfile.VUE.js")
+link(rel="stylesheet",href="/css/profile.css")
+body
+    include header.pug   
+
+    form.ProfileCard(v-on:submit.prevent="loginUser" id="login_form")
+        div
+            label(for="l_email") email
+            input.form-control(type="text" v-model="email" id="l_email")
+        div
+            label(for="l_password") password
+            input.form-control(type="text" v-model="password" id="l_password")
+        .form-group.form-check
+            input#exampleCheck1.form-check-input(type='checkbox' v-model="permanent")
+            label.form-check-label(for='exampleCheck1') remember_me
+
+        div
+            button.text-white.btn.btn-block.mt-3.mb-3#btn_login login User
+            

@@ -1,0 +1,30 @@
+include ./layout.pug
+style.
+    ul li{
+        color:brown;
+    }
+    .card{
+        direction:rtl;
+    }
+body
+    include ./header.pug
+
+    main.mt-5
+        .container
+            .card.bg-info
+                .card-head
+                    h5 this is test rest api (mvc_design) with
+                .card-body
+                    ul.display-5.text-right
+                        li کتابخانه دیتابیس : مانگوس
+                        li وب فریم ورک : اکسپرس
+                        li تمپلیت انجین : پاگ
+                        li جاوااسکریپت فریم ورک : جی کوئری | وی یو ای جی اس
+                    hr
+                    #contact_with_me
+                        p.text-right سلام برای تماس بامن
+                        p.text-right آدرس ایمیل : realmehdi1999m@gmail.com
+                        p.text-right شماره تلفن : 09190868386
+                        hr
+                        #introduce-me
+                            h6.text-right.mt-5 توسعه دهنده : مهدی رباط جزی

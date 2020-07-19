@@ -7,15 +7,12 @@ body
     .container.mb-5.mt-5
         form.input-group(id="form")
             input.form-control(id="Task" class="search")
-            button.btn.btn-danger#submit Submit Task
+            button.btn.btn-danger.btn-small#submitTask Submit Task
 
     main.container
-
         .d-flex.justify-content-between
             h2.mb-3(id='count')
             
-            
-            button.btn.btn-info.fetch(value="all") fetchAllTasks
             
             .btn-group.dropright
                 button.btn.btn-warning.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
@@ -27,7 +24,7 @@ body
             
 
 
-        table.table.table-striped.table-bordered
+        table.table.table-striped.table-borderless.table-responsive-sm.table-info
             thead
                 tr
                     th(width=5) isDone
@@ -37,9 +34,6 @@ body
                     th update
                     th remove
                     th created At
+                    th sender
             tbody#tbody
             
-
-
-
-    include ./footer.pug

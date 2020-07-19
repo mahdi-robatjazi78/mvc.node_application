@@ -1,9 +1,10 @@
 const { mongoose,conn } = require('../db/connection/connect')
 const { get_date_time, signUpControl } = require('./server.extending')
-	userModel = require('../db/model/UserModel')
 	bcrypt = require("bcryptjs")
 	jwt = require('jsonwebtoken')
 	mongodb = require('mongodb')
+	groupModel = require('../db/model/GroupModel')
+	userModel = require("../db/model/UserModel")
 	gridfsbucket = mongodb.GridFSBucket
 require('dotenv').config()
 
@@ -86,26 +87,39 @@ const controller = {
 	},
 	fetchAllData: async (req, res) => {
 		try {
-			let data = await userModel.find({})
-			let count = await userModel.countDocuments({})
+			const {groupName,owned,joined} = req.body
+			const data = await userModel.find({joined_Groups:groupName})
+			const count = await userModel.countDocuments({joined_Groups:groupName})
+
 			await res.status(200).send({ data, count })
 		} catch (err) {
 			console.error(err)
 		}
 	},
-	removeUser: async (req, res) => {
+	removeUserFromGroup: async (req, res) => {
 		try {
-			const user =await userModel.findById(req.body._id)
+			let {id , groupName} = req.body
+
+			const _id = new mongoose.Types.ObjectId(id)
+			
+			console.log(_id ,groupName);
+
+			const user = await userModel.findByIdAndUpdate(_id , {
+				$pull:{
+					joined_Groups:groupName
+				}
+			})
 			if(!user){
-				return res.status(404).send("this user not found!!! in our database")
+				return res.status(404).send({msg:'not found'})
 			}
-			if(user.imageAddress){
-				let obj_id = await new mongoose.Types.ObjectId(user.imageAddress.id)
-				bucket.delete(obj_id)
-				await userModel.findByIdAndDelete(req.body._id)
-			}else{
-				await userModel.findByIdAndDelete(req.body._id)
-			}
+			await groupModel.findOneAndUpdate({groupName},{
+				$pull:{
+					members_joining_id:id
+				},
+				$inc:{
+					membersCount:-1
+				}
+			})
 
 			await res.end()
 		} catch (err) {
@@ -113,21 +127,28 @@ const controller = {
 			console.error(`something went wrong ${err}`)
 		}
 	},
-	updateUser: async (req, res) => {
-		const { userName, phone, email, password, _id } = req.body
+	getUpdatePageUserData:(req,res)=>{
+		
+		const {userName,phone,email} = req.user
+		res.status(200).send({userName,email,phone})
+		
+	},
+	editProfile: async (req, res) => {
 		try {
-			const user = await userModel.findByIdAndUpdate(_id, {
+			const {userName,phone,email,password} = req.body
+			const salt  = await bcrypt.genSalt(10)
+			const hash = await bcrypt.hash(password,salt)
+
+
+			await userModel.findByIdAndUpdate(req.user._id, {
 				$set: {
 					userName,
 					phone,
 					email,
-					password,
+					password:hash,
 				},
 			})
-			if (!user) {
-				return res.status(404).send("not found")
-			}
-			res.end()
+			res.status(200).send({msg:"your profile update now"})
 		} catch (err) {
 			console.error(err)
 		}
@@ -183,11 +204,10 @@ const controller = {
 			res.status(400).send(err)			
 		}
 	},
+
 	logout:async (req, res) => {
 		try{
-			let user = await userModel.findOneAndUpdate({
-				_id:req.user._id
-			},{
+			await userModel.findByIdAndUpdate(req.user._id,{
 				$pull:{
 					tokens:{
 						token:req.token
@@ -195,12 +215,9 @@ const controller = {
 				}
 			})
 
-			if(user){
-				return res.status(200).send("user logout operation successfully is done")
-			}	
-			reject(user)
+			return res.status(200).send({msg:"user logout operation successfully is done"})
 		}catch(err){
-			res.staus(500).send(err)
+			res.staus(500).send({msg:err})
 		}
 	}
 

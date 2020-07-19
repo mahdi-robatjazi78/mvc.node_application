@@ -1,0 +1,23 @@
+include layout.pug
+script(type="text/javascript" src="/js/UserUpdate.js")
+link(rel="stylesheet",href="/css/profile.css")
+body
+    include header.pug
+
+
+    form.ProfileCard(v-on:submit.prevent="editProfile" id="editProfile")
+        div
+            label(for="userName") username
+            input.form-control(type="text" v-model="userName" id="userName")
+        div
+            label(for="phone") phone
+            input.form-control(type="text" v-model="phone" id="phone")
+        div
+            label(for="email") email
+            input.form-control(type="text" v-model="email" id="email")
+        div
+            label(for="password") password
+            input.form-control(type="text" v-model="password" id="password")
+
+        div
+            button.btn.btn-primary.btn-block.mt-3.mb-3#editProfile Edit Profile
