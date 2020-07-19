@@ -1,49 +1,45 @@
-body{
-	background-color:#bebebe;
-	color:rgb(226, 174, 31);
+html,body{
+	width:100%;
+	background-color:#e2e2e2;
+	color:black;
 	font-family: 'Montserrat Alternates', sans-serif;
 	font-size:1em;
 	margin:0;
 	padding:0;
+	box-sizing: border-box;
+	overflow-x: hidden; 
 }
-
+header{ 
+	/* overflow-x: hidden;  */
+}
 label{
 	color:darkmagenta;
 	display:block;
 	width:100%;
 }
-table{
-	background-color: rgb(172, 102, 102);
+#area{
+	display:flex;
+	flex-direction: column;
+	height:210px;
+	width:550px;
+	margin:auto;
 }
-td{
-	color:rgb(85, 35, 139);
+
+#area button{
+	width:120px;
+	margin-left:auto;
+	margin-top:5px;
+}
+
+table th,table td {
+	text-align:center
+}
+.table_Users{	 
+	color:rgb(216, 216, 3);
 	font-weight:bold;
 }
-header{
-	width:100%;
-	height:50px;
-	background-color:#c8c8c8;
-	border-bottom:2px dotted rgb(136, 136, 136)
-}
-#logout_button{
-	position: absolute;
-	right:50px;	
-	top:5px;
-}
-.nav-link{
-	font-size:.8em;
-	display:inline-flex;
-	flex-direction: row;
-	/* justify-content: space-around; */
-	/* padding:20px 20px; */
-	list-style-type: none;
-	cursor: pointer;
-}
-.nav-link a{
-	color:rgb(80, 78, 0);
-	font-size:1.3em;
-	padding-left: 50px;
-	font-weight: bold;
+#tbody td{
+	color:red;
 }
 .logo{
 	width:20px;
@@ -51,7 +47,7 @@ header{
 	margin:auto;
 }
 .card{
-	background: rgb(155, 176, 190);
+	background: rgb(70, 111, 139);
 	border-radius: 5px;
 	height:fit-content;
 	margin:40px;
@@ -68,10 +64,7 @@ main{
 .signUp h3{
 	display:inline
 }
-.done{
-	text-decoration: line-through;
-	color:rgb(204, 173, 173)
-}
+
 .display-4{
 	font-size:2em;
 }
@@ -79,27 +72,54 @@ main{
 	background-color:rgb(223, 223, 223);
 	border:1px solid black;
 	border-radius:9px;
-}	
-footer{
-	background-color:rgb(155, 176, 190);
-	position:fixed;
-	bottom:0;	
-	width:100%;
-	height:75px;
-	color:black;
-	margin-bottom:8px;
-	padding:14px;
-	border-top:1px solid blue;
-	font-weight: bold;
 }
 .btn{
 	border:1px solid black;
 }
 
 #btn_login,#btn_register{
-	background-color:darkviolet
+	background-color:rgb(0, 21, 211)
 }
 
-.color_schema{
-	color:red;
+#showInfo{
+	height:150px;
+	border:1px solid black;
+	display: flex;
+	justify-content:space-around;
+}
+
+#showInfo p{
+	padding-top:50px;	
+	font-size: 1.2em; 
+	text-align: center;	
+}
+#showInfo p span{
+	font-weight: bold;
+}
+.dropdown-menu{
+	cursor:pointer;
+}
+
+@media only screen and (max-width:767px){
+	html,body{ 
+		height:160vh;		
+	}
+
+	#showInfo{
+		height:200px;
+	}
+	#showInfo p{
+		padding-top:0;
+		height:70px;
+		margin-bottom:0;
+	}
+	table{
+		overflow-x:scroll;
+	}
+	.search{
+		width:100%;
+	}
+	#count{
+		font-size:1.4em;	
+	}
 }

@@ -1,4 +1,9 @@
 $(document).ready(function () {
+
+
+
+
+
 	// SEND TOKEN FOR AUTHENTICATION BEFORE EXECUTE ANY OPERATION
 	const sendToken = function (request) {
 		try {
@@ -14,7 +19,7 @@ $(document).ready(function () {
 	var oldTask = undefined
 
 	// ADD TASK or EDITING TASK
-	$("#submit").on('click',function (e) {
+	$("#submitTask").on('click',function (e) {
 		const nullTodoInput=()=> {
 			alert("please fill input task")
 			e.preventDefault()
@@ -30,7 +35,7 @@ $(document).ready(function () {
 					beforeSend: sendToken,
 					method: "post",
 					url: "/todoList/newTask",
-					data: { todo },
+					data: { task:todo ,sender:["self"] },
 				})
 					.done(() => {
 						window.location.reload()
@@ -44,7 +49,7 @@ $(document).ready(function () {
 					beforeSend: sendToken,
 					method: "put",
 					url: "/todoList/updateTask",
-					data: { todo, oldTask },
+					data: { task:todo, oldTask },
 				})
 					.done(function () {
 						editMode = false
@@ -64,23 +69,35 @@ $(document).ready(function () {
 		allTasks.map((item, index) => {
 			checkboxValues.push(item.isDone)
 
+			let sender ;
+
+			if(item.sender.self===true){
+				sender = "self"
+			}else if(item.sender.admin){
+				sender =`admin/${item.sender.groupName}`
+			}else if(item.sender.friend_name){
+				sender = `friend/${item.sender.groupName}/${item.sender.friend_name}`
+			}
+
+			
 			$("#tbody").append(`
 				<tr>
 					<td width="5%" class="chk">
 						<input type="checkbox" value=${item._id} />
 					</td>
-					<td class=${item.isDone === true ? " done" : ""}>${item.todo}</td>
-					<td class=${item.isDone === true ? " done" : ""}>${item.date}</td>
-					<td class=${item.isDone === true ? " done" : ""}>${item.time}</td>
+					<td class=${item.isDone === true ? "text-muted" : ""}>${item.todo}</td>
+					<td class=${item.isDone === true ? "text-muted" : ""}>${item.date}</td>
+					<td class=${item.isDone === true ? "text-muted" : ""}>${item.time}</td>
 					<td class="edit">
 						<img class="logo" src="/images/edit.svg">
 					</td>
 					<td class="trash">
 						<img class="logo" src="/images/trash.svg">
 					</td>
-					<td class=${item.isDone === true ? " done" : ""}>
+					<td class=${item.isDone === true ? "text-muted" : ""}>
 						${moment(item.createdAt).fromNow()}
-					</td>							
+					</td>
+					<td class=${item.isDone === true ? "text-muted" : ""}>${sender}</td>	
 				</tr>
 			`)
 
@@ -91,21 +108,24 @@ $(document).ready(function () {
 
 
 	// SHOW TASKS
-	$(".fetch,.all,.disable,.enabled").on("click",function (e) {
+	$(".all,.disable,.enabled").on("click",function () {
 		let fetchStatus = $(this).attr("value")
+		fetchTodos(fetchStatus)
+	})
+
+	const fetchTodos=(status)=>{
 		$("#tbody").html("")
-		var tasks = []
 		$.ajax({
 			beforeSend: sendToken,
 			method: "get",
-			url: `/todoList/${fetchStatus}`,
-			success: function (data, status, xhr) {
+			url: `/todoList/${status}`,
+			success: (data) => {
 				if (data.count == 0) {
 					alert("please first enter a task and then see it")
 					return
 				}
 				// TASKS COUNT
-				$("#count").html(`count : ${data.count}`).css({color:'black'})
+				$("#count").html(`count : ${data.count}`).css({ color: 'black' })
 
 				// WRITE TASKS TO TODOLIST PAGE
 				writeHtmlTable(data.allTasks, data.moment)
@@ -146,7 +166,7 @@ $(document).ready(function () {
 				$(".edit").on("click", function (e) {
 					const todo = $(this).closest("tr").find("td:eq(1)").text()
 					$("#Task").val(todo)
-					$("#submit").text("Edit Task")
+					$("#submitTask").text("Edit Task")
 					oldTask = todo
 					editMode = true
 				})
@@ -155,5 +175,6 @@ $(document).ready(function () {
 				console.error(err)
 			},
 		})
-	})
+	}
+	fetchTodos("all")
 })

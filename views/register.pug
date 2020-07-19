@@ -1,0 +1,25 @@
+include layout.pug
+script(type="text/javascript" src="/js/UserProfile.VUE.js")
+link(rel="stylesheet",href="/css/profile.css")
+body
+    include header.pug
+
+
+    form.ProfileCard(v-on:submit.prevent="AddNewUser" enctype="multipart/form-data" id="registerForm")
+        div
+            label(for="userName") username
+            input.form-control(type="text" v-model="userName" id="userName")
+        div
+            label(for="phone") phone
+            input.form-control(type="text" v-model="phone" id="phone")
+        div
+            label(for="email") email
+            input.form-control(type="text" v-model="email" id="email")
+        div
+            label(for="password") password
+            input.form-control(type="text" v-model="password" id="password")
+        div
+            label(for="file") please insert your Image (optional)
+            input.form-control(id="file" type="file" name="imgUser")
+        div
+            button.btn.btn-primary.btn-block.mt-3.mb-3#btn_register new User

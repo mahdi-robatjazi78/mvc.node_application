@@ -7,7 +7,7 @@ style.
     }
 
 script(src="/js/ShoppingScript_JQ.js")
-body(style="background-color:#e1e1e1;color:black")
+body
     include header.pug
 
     main
@@ -24,10 +24,8 @@ body(style="background-color:#e1e1e1;color:black")
                                         button.sellme.btn.btn-primary.btn-block sell me
                             .col
                                 .card-body
-                                    p.card-title=item.commodity_name
-                                    p.priceCard.card-title=item.price+`$`
-                                    p.text-dark.card-title=item.category
-                                    p.text-dark.card-title=` seller : `+ item.seller
-
-    include footer.pug
+                                    p.text-info.card-title=item.commodity_name
+                                    p.text-info.priceCard.card-title=item.price+`$`
+                                    p.text-info.card-title=item.category
+                                    p.text-info.card-title=` seller : `+ item.seller
 

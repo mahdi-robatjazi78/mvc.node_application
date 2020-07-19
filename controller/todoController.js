@@ -3,7 +3,6 @@ const {get_date_time} =require('./server.extending')
 
 
 
-
 const todoController = {
     todoPage:async(req,res)=>{
         try {
@@ -23,24 +22,47 @@ const todoController = {
     },
     NewTask : async(req,res)=>{
         try {
-            const body = req.body
-            const userId = req.user._id
-
-            var datetime = get_date_time()
+            const {task,sender} = req.body
+            console.log(req.body);
+            let userId
+            let datetime = get_date_time()
+            
+            let _writenBy ={
+                self:undefined,
+                groupName:undefined,
+                admin:undefined,
+                friend_name:undefined
+            }
+            
+            if(sender[0]==="self"){
+                userId = req.user._id
+                _writenBy.self = true
+            }
+            else if(sender[0]==="admin"){
+                userId = sender[2]
+                _writenBy.admin=true
+                _writenBy.groupName = sender[1]
+            }
+            else if(sender[0]==="friend"){
+                userId = sender[2]
+                _writenBy.groupName = sender[1]
+                _writenBy.friend_name = req.user.userName
+            }
 
             const newTask = new todoModel({
-                todo : body.todo,
+                todo : task,
                 isDone : false,
                 time:datetime.time,
                 date:datetime.date,
-                userId
+                userId,
+                sender:_writenBy
             })
             await newTask.save()
-            res.status(200).send('your data saved now')
+            res.status(200).send({msg:'your data saved now'})
             
         } catch (err) {
             console.error(err);            
-            res.status(400).send(err)
+            res.status(400).send({msg:err})
         }   
     },
     removeTask : async(req,res)=>{

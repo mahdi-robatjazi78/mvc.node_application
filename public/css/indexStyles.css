@@ -1,0 +1,67 @@
+html,body{ 
+    height:200vh;
+    width:98vw;
+}
+.boxStyles{
+    background-color:rgb(180, 180, 180);
+}
+.groupBox{
+    width:80%;
+    height:180px;
+    margin:auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px;
+}
+.groupBox_forShowingList{
+    width:80%;
+    height: fit-content;
+    margin:auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px;
+}
+.boxText{
+    color:rgb(3, 77, 0);
+    margin:0px;
+    font-size: 1.7rem;
+    font-weight: bold;
+}
+.groupBox form{
+    /* width:70%; */
+    display:block;
+    /* margin:auto; */
+    padding-top:40px; 
+    position:relative;
+}
+.groupBox form input{
+    position:absolute;
+    left:50%;
+    transform:translateX(-50%);
+    height:54px;
+    font-size:1.5rem;
+    border:none;
+    border-radius:10px;
+    background-color:rgb(206, 206, 206);
+    text-align: center;
+}
+#ownedGroupsList li,#joinedGroupsList li{
+    padding-bottom:9px;
+    color:blue;
+    font-size:1.3em;
+    font-weight: bold;
+    cursor: pointer;
+}
+@media only screen and (max-width:767px){
+    .groupBox{
+        margin-bottom:20px;
+    }
+}
+@media only screen and (max-width:1000px) and (min-width:767px){
+    .groupBox form input{
+        width:80%;
+    }    
+}
+@media only screen and (max-width:440px){
+    .groupBox form input{
+        width:80%;
+    }
+}

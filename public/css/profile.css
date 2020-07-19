@@ -1,0 +1,18 @@
+body{ 
+    background-image:url("/images/profile_back.jpg");
+    background-size:cover
+}
+.ProfileCard{
+    width:400px;
+    height:auto;
+    margin:0 auto;
+    display:flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px;
+    padding:55px;
+    margin-top:50px;
+}
+.ProfileCard input{
+    background:none;
+    border:1px solid black
+}

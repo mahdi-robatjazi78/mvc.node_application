@@ -1,18 +1,26 @@
 include layout.pug
-script(src="/js/UserScript.VUE.js")
-script.
-
-    var isLogin = window.localStorage.getItem('x-auth')
-body
+script(src="/js/UserList.VUE.js")
+body(style="heigth:150vh")
     include ./header.pug
+    
+    section#showInfo.row
+        p.col-lg-4.col-md-4.col-sm-12.groupName group name: 
+        p.col-lg-4.col-md-4.col-sm-12#position you are : 
+        p.col-lg-4.col-md-4.col-sm-12#count members count :
+
+    section#area 
+        label write todo for:
+        textarea#textarea(name="writeTodoToSomeBody" rows="5" cols="50")
+        button.btn.btn-success send Task
+
     main#table.mt-5
-        .container.d-flex.justify-content-between
-            h2.mb-3.text-dark count : {{count}}
-            input(type="text",class="form-control col-5",placeholder="search in userNames",
+        .container.mb-2
+            input.form-control(type="text"  placeholder="search in userNames",
                 v-model="textSearch",v-on:keyup="searchUser" class="search")
         .container    
-            table.table.table-striped.table-bordered
-                thead
+            table.table_Users.table.table-hover.table-sm.table-dark.table-responsive-sm
+                caption.groupName list of users 
+                thead.bg-danger
                     tr
                         th userName
                         th phone
@@ -21,18 +29,18 @@ body
                         th pic
                         th signUp_Date_Time
                         th Remove
-                        th Update
+
                 tbody
                     tr(v-for="user in people")
                         td {{user.userName}}
                         td {{user.phone}}
                         td {{user.email}}
                         td {{user.cash}}
-                        td.text-center.p-2
+                        td.p-2
                             div(v-if="!user.imageAddress")
                                 img(src="/images/user_logo.png" width="30px")
                             div(v-else)
-                                img(:src="'http://localhost:80/image/user/'+user.imageAddress.filename"
+                                img(:src="'http://localhost:3000/image/user/'+user.imageAddress.filename"
                                     width="60px"
                                     height="50px")
 
@@ -40,30 +48,6 @@ body
                         td {{user.signUpDate +'___'+ user.signUpTime}}
                         td
                             img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
-                        td 
-                            img.logo(src="/images/edit.svg" , v-on:click="beginUpdate(user)"
-                            data-toggle="collapse", data-target="#collapseExample", aria-expanded="false",
-                            aria-controls="collapseExample") 
-        
-        
-        
-
-        
-        .collapse#collapseExample
-            form.row(class="form")
-                .col
-                    input.form-control.mb-1(type="text" , placeholder="userName" , v-model="userName")
-                    input.form-control.mb-1(type="text" , placeholder="phone" , v-model="phone")
-                .col  
-                    input.form-control.mb-1(type="text" , placeholder="email" , v-model="email")
-                    button.btn.btn-info.btn-block.text-warning(v-on:click="UpdateUser") update User
-
-    include ./footer.pug
 
 
-    script.
-        var urlParams = new URLSearchParams(location.search)
-        var msg = urlParams.get('msg')
-        if(msg){
-            $("#msg").text(msg)
-        }
+                            
