@@ -1,6 +1,7 @@
 body{ 
     background-image:url("/images/profile_back.jpg");
-    background-size:cover
+    background-size:cover;
+    height:150vh;   
 }
 .ProfileCard{
     width:400px;

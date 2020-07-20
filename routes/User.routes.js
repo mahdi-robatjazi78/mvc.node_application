@@ -12,7 +12,7 @@ router.get('/',function(req,res){
 router.post('/fetch',controller.fetchAllData)
 
 router.post('/signUp',upload.single('imgUser'),controller.signUp)
-router.delete('/removeUserFromGroup',controller.removeUserFromGroup)
+router.delete('/removeUserFromGroup',_AUTH,controller.removeUserFromGroup)
 router.post('/login',controller.loginUser)
 
 

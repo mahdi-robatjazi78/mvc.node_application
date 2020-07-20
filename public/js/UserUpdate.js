@@ -41,8 +41,6 @@ $(document).ready(function () {
                 })
             },
             editProfile:()=>{
-
-
                 $.ajax({
                     beforeSend:sendToken,
                     method:"put",

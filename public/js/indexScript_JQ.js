@@ -69,34 +69,40 @@ $(document).ready(function () {
 
     //get user own groups and user joined gropus
     const getGroupsData=()=>{
-        $.ajax({
-            beforeSend:setToken,
-            method:"get",
-            url:"/group/get_User_Groups_Data",
-            success:function(res){
-                Success=true
-                res.owned_groups.map(item=>{
-                    $("#ownedGroupsList").append(`<li class="owned_groupItems">${item}</li>`)
-                })
+        let result = localStorage.getItem('x-auth')|| sessionStorage.getItem("x-auth")
+        result
+        ?
+            $.ajax({
+                beforeSend:setToken,
+                method:"get",
+                url:"/group/get_User_Groups_Data",
+                success:function(res){
+                    Success=true
+                    res.owned_groups.map(item=>{
+                        $("#ownedGroupsList").append(`<li class="owned_groupItems">${item}</li>`)
+                    })
 
-                res.joined_groups.map(item=>{
-                    $("#joinedGroupsList").append(`<li class="joined_groupItems">${item}</li>`)
-                })    
+                    res.joined_groups.map(item=>{
+                        $("#joinedGroupsList").append(`<li class="joined_groupItems">${item}</li>`)
+                    })    
 
-                $(".owned_groupItems").on("click",function(e){
-                    window.location.href=`/userList/?groupName=${e.target.innerText}&owned=true`
-                })
+                    $(".owned_groupItems").on("click",function(e){
+                        window.location.href=`/userList/?groupName=${e.target.innerText}&owned=true`
+                    })
 
-                $(".joined_groupItems").on('click',function(e){
-                    window.location.href=`/userList/?groupName=${e.target.innerText}&joined=true`
-                })
+                    $(".joined_groupItems").on('click',function(e){
+                        window.location.href=`/userList/?groupName=${e.target.innerText}&joined=true`
+                    })
 
-            },
-            error:function(err){
-                Success=false
-                console.log(err);
-            }
-        })
+                },
+                error:function(err){
+                    Success=false
+                    console.log(err);
+                }
+            })
+        :()=>{
+            return
+        }
     }
 
     

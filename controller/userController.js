@@ -43,8 +43,7 @@ const controller = {
 					signUpDate: datetime.date,
 					signUpTime: datetime.time
 				})
-
-
+				
 				const token = jwt.sign({
 					_id: newPerson._id.toHexString(),
 					access: 'auth'

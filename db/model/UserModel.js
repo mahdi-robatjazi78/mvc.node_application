@@ -36,8 +36,9 @@ const UserSchema = new mongoose.Schema({
 	joined_Groups:{
 		_id:false,
 		type:Array
-	}
+	}	
 })
+
 UserSchema.plugin(timestamps)
 const userModel = conn.model("user", UserSchema)
 module.exports = userModel
