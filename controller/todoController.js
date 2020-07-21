@@ -23,7 +23,6 @@ const todoController = {
     NewTask : async(req,res)=>{
         try {
             const {task,sender} = req.body
-            console.log(req.body);
             let userId
             let datetime = get_date_time()
             

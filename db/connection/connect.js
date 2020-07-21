@@ -2,7 +2,17 @@ const mongoose = require("mongoose")
 mongoose.Promise = global.Promise
 require("dotenv").config()
 
-const conn = mongoose.createConnection(`${process.env.MONGO_URI}`,{
+
+let mongo_uri
+let env = process.env
+
+if(process.env.DEV){
+	mongo_uri = env.DEV_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
+}else{
+	mongo_uri = env.PRODUCT_MONGO_URI
+}
+
+const conn = mongoose.createConnection(mongo_uri,{
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false,
