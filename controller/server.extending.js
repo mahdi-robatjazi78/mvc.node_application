@@ -6,49 +6,41 @@ const multer = require('multer')
     path = require('path')
 
 
-// for storage user image into database
+    // for storage user image into database
 
-let mongo_uri
-let env = process.env
-if(env.DEV){
-    mongo_uri = env.DEV_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
-}else{
-    mongo_uri = env.PRODUCT_MONGO_URI
-}
-
-const storage = new gridStorage({
-    url:mongo_uri,
-    options:{
-        useUnifiedTopology:true,
-        useNewUrlParser:true
-    },
-    file:(req,file)=>{
-        return new Promise((resolve,reject)=>{
-            crypto.randomBytes(16,(err,buffer)=>{
-                if(err) return reject(err)
-                const fileinfo = {
-                    filename : buffer.toString('hex')+path.extname(file.originalname),
-                    bucketName:'userImages',
-                    metadata:{
-                        userId:null
+    storage = new gridStorage({
+        url:process.env.MONGO_URI+process.env.MONGO_PORT+"/"+process.env.DB_NAME,
+        options:{
+            useUnifiedTopology:true,
+            useNewUrlParser:true
+        },
+        file:(req,file)=>{
+            return new Promise((resolve,reject)=>{
+                crypto.randomBytes(16,(err,buffer)=>{
+                    if(err) return reject(err)
+                    const fileinfo = {
+                        filename : buffer.toString('hex')+path.extname(file.originalname),
+                        bucketName:'userImages',
+                        metadata:{
+                            userId:null
+                        }
                     }
-                }
-                resolve(fileinfo)
+                    resolve(fileinfo)
+                })
             })
-        })
-    }
-})
-const upload = multer({storage})
+        }
+    })
+    upload = multer({storage})
 
 
-const get_date_time = () =>{
-    var d = new Date()
-    var datetime = {
-        date : d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate(),
-        time : d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
+    get_date_time = () =>{
+        var d = new Date()
+        var datetime = {
+            date : d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate(),
+            time : d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()
+        }
+        return datetime
     }
-    return datetime
-}
 
 
 

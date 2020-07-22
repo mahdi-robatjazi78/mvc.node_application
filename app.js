@@ -12,13 +12,8 @@ app.use(express.static(__dirname + "/public"))
 
 app.use(appRouter)
 
-let port
-if(process.env.DEV){
-	port = process.env.DEV_APP_PORT
-}else{
-	port = process.env.PRODUCT_APP_PORT
-}
 
-app.listen(port, () => {
-	console.log(`server is running on port ${port}`)
+
+app.listen(process.env.APP_PORT, () => {
+	console.log(`server is running on port ${process.env.APP_PORT}`)
 })
