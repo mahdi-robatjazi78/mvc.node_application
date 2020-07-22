@@ -1,15 +1,22 @@
 require('dotenv').config()
 
+var uri
+const env = process.env
+env.DEV===true
+?uri=env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
+:uri=env.ONLINE_MONGO_URI
+
+
 const multer = require('multer')
 	gridStorage = require('multer-gridfs-storage')
 	crypto = require('crypto')
     path = require('path')
 
 
+    
     // for storage user image into database
-
     storage = new gridStorage({
-        url:process.env.MONGO_URI+process.env.MONGO_PORT+"/"+process.env.DB_NAME,
+        url:uri,
         options:{
             useUnifiedTopology:true,
             useNewUrlParser:true

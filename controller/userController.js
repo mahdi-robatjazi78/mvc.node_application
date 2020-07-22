@@ -89,8 +89,12 @@ const controller = {
 			const {groupName,owned,joined} = req.body
 			const data = await userModel.find({joined_Groups:groupName})
 			const count = await userModel.countDocuments({joined_Groups:groupName})
-
-			await res.status(200).send({ data, count })
+			const admin = await userModel.findOne({owned_Groups:groupName})
+			await res.status(200).send({ 
+				data,
+				count,
+				adminName:admin.userName
+			})
 		} catch (err) {
 			console.error(err)
 		}

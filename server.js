@@ -14,6 +14,10 @@ app.use(appRouter)
 
 
 
-app.listen(process.env.APP_PORT, () => {
-	console.log(`server is running on port ${process.env.APP_PORT}`)
+let port
+let env = process.env
+env.DEV===true ? port = env.DEV_APP_PORT : port = env.APP_PORT
+
+app.listen(port, () => {
+	console.log(`server is running on port ${port}`)
 })

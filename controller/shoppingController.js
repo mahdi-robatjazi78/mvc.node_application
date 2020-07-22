@@ -9,7 +9,7 @@ const shopController = {
         try {
             
             fs.readFile( 
-                path.join(__dirname,'../'+process.env.JSON_FILE_PATH_FOR_SHPPING_CENTER),
+                path.join(__dirname,'../'+process.env.JSON_FILE_PATH_FOR_SHOPPING_CENTER),
                 'utf8',
                 function(err,data){
                     if(err)console.log(err);

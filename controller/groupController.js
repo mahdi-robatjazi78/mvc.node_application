@@ -15,11 +15,8 @@ const controller = {
 
             const findedGroupName = await groupModel.findOne({groupName})
             if(findedGroupName){
-                console.log(findedGroupName);
                 return res.status(500).json({msg:'please write another group name this name already been decleared'})
-                 
             }
-
             const group = new groupModel({
                 creatorID:req.user._id.toHexString(),
                 groupName,

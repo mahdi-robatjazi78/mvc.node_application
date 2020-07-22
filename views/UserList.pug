@@ -4,11 +4,12 @@ body(style="heigth:150vh")
     include ./header.pug
     
     section#showInfo.row
-        p.col-lg-4.col-md-4.col-sm-12.groupName group name: 
-        p.col-lg-4.col-md-4.col-sm-12#position you are : 
-        p.col-lg-4.col-md-4.col-sm-12#count members count :
+        p.col-lg-3.col-md-3.col-sm-12.groupName group name : 
+        p.col-lg-3.col-md-3.col-sm-12#adminName admin name : 
+        p.col-lg-3.col-md-3.col-sm-12#yourPosition you are : 
+        p.col-lg-3.col-md-3.col-sm-12#count members count :
 
-    section#area 
+    section#TextArea 
         label write todo for:
         textarea#textarea(name="writeTodoToSomeBody" rows="5" cols="50")
         button.btn.btn-success send Task
