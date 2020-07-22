@@ -89,12 +89,8 @@ const controller = {
 			const {groupName,owned,joined} = req.body
 			const data = await userModel.find({joined_Groups:groupName})
 			const count = await userModel.countDocuments({joined_Groups:groupName})
-			const admin = await userModel.findOne({owned_Groups:groupName})
-			await res.status(200).send({ 
-				data,
-				count,
-				adminName:admin.userName
-			})
+
+			await res.status(200).send({ data, count })
 		} catch (err) {
 			console.error(err)
 		}
@@ -207,6 +203,7 @@ const controller = {
 			res.status(400).send(err)			
 		}
 	},
+
 	logout:async (req, res) => {
 		try{
 			await userModel.findByIdAndUpdate(req.user._id,{
