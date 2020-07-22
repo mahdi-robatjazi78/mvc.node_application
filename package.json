@@ -1,11 +1,11 @@
 {
-  "name": "pr",
+  "name": "cv.mvc.node_application",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "this is for test rest api",
+  "main": "server.js",
   "scripts": {
-    "start": "set DEV=false && node app.js",
-    "dev": "set DEV=true && nodemon app.js"
+    "start": "set DEV=false && node server.js",
+    "dev": "set DEV=true && nodemon server.js"
   },
   "keywords": [],
   "author": "",
