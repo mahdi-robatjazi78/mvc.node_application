@@ -7,7 +7,7 @@ $(document).ready(function () {
 		)
 	}
 
-	$("#area").css("display","none")
+	$("#TextArea").css("display","none")
 
 	let fetch_Users_Info = () => {
 		let groupName,owned,joined
@@ -19,11 +19,12 @@ $(document).ready(function () {
 			else if(param[0]==="joined")joined=param[1]
 		}
 
-		const showinfo = (count) =>{
+		const showinfo = (count , adminName) =>{
 
 			$('.groupName').append(`<span>${groupName}</span>`)
-			if(owned) $('#position').append("<span>admin of this group</span>")
-			else if(joined) $("#position").append("<span>joined to this group</span>")
+			if(owned) $('#yourPosition').append("<span>admin of this group</span>")
+			else if(joined) $("#yourPosition").append("<span>joined to this group</span>")
+			$("#adminName").append(`<span>${adminName}</span>`)
 			$("#count").append(`<span>${count}</span>`)
 
 		}
@@ -35,9 +36,8 @@ $(document).ready(function () {
 
 		$.post(`/userList/fetch`,
 			{groupName,owned,joined},
-			function ({ data, count }) {
-				
-			showinfo(count)
+			function ({ data, count ,adminName }) {
+			showinfo(count , adminName)
 			
 			let table = new Vue({
 				el: "#table",
@@ -87,29 +87,29 @@ $(document).ready(function () {
 						this.people = user
 					},
 					sendTodo : function(e){
-						$("#area").css({"display":"flex"})
+						$("#TextArea").css({"display":"flex"})
 						let t_row_index = $(e.target).parent().index()
 						this.people.map((item,index)=>{
 							if(index==t_row_index){
-								$("#area label span").remove()
-								$("#area label").append(`<span class="text-primary"> ${item.userName} </span>`)	
+								$("#TextArea label span").remove()
+								$("#TextArea label").append(`<span class="text-primary"> ${item.userName} </span>`)	
 								
 
 								var sender = [];
 
-								if($("#position").text().includes("admin")){
+								if($("#yourPosition").text().includes("admin")){
 									sender.push("admin")
 									sender.push(getGroupName())
 									sender.push(item._id)
 								}
-								else if($("#position").text().includes("joined")){
+								else if($("#yourPosition").text().includes("joined")){
 									sender.push("friend")
 									sender.push(getGroupName())
 									sender.push(item._id)
 								}
 
 
-								$("#area button").on("click",function(e){
+								$("#TextArea button").on("click",function(e){
 									let task = $("#textarea").val()
 									if(task === ""){
 										alert('please fill text area')
@@ -122,9 +122,9 @@ $(document).ready(function () {
 												task ,
 												sender
 											},
-											success:function(data){
+											success:function(){
 												Success=true
-												alert(data.msg)
+												alert("your task sended now")
 											},
 											error:function(err){
 												Success=false
@@ -132,7 +132,7 @@ $(document).ready(function () {
 											}
 										})
 
-										$("#area label span").remove()
+										$("#TextArea label span").remove()
 
 									}
 								})

@@ -1,9 +1,5 @@
 $(document).ready(function () {
 
-
-
-
-
 	// SEND TOKEN FOR AUTHENTICATION BEFORE EXECUTE ANY OPERATION
 	const sendToken = function (request) {
 		try {
