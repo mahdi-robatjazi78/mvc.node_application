@@ -7,18 +7,25 @@ body
     
     
     
-    h1(style="direction:rtl").display-5.text-center.mb-5.mt-5.text-dark  سلام. در این اپلیکیشن شما میتوانید اول ثبت نام کنید بعد یک گروه تشکیل دهید  یاعضو گروهی که میشناسید شوید نام گروه بسیار مهم است و شما باید آن راخاص (به طوری که در دیتابیس وجود ندشته باشد وارد کنید)شما می توانید برای خودتان یا هم گروهی تان یا برای ادمین گروه وظیفه تنظیم کنید.
+    p(style="direction:rtl").display-5.text-center.mb-5.mt-5.text-dark  سلام. در این اپلیکیشن شما میتوانید اول ثبت نام کنید بعد یک گروه تشکیل دهید  یاعضو گروهی که میشناسید شوید نام گروه بسیار مهم است و شما باید آن راخاص (به طوری که در دیتابیس وجود ندشته باشد وارد کنید)شما می توانید برای خودتان یا هم گروهی تان یا برای ادمین گروه وظیفه تنظیم کنید.
+
+
     
+    != messages('showMessages', locals)
+
+    .container 
+        #showMessageFromJquery
+
     
     .row
         section.col-lg-6.col-md-6.col-sm-12
             .groupBox 
-                .text-center.boxText create a group
+                .text-center.boxText یک گروه بساز
                 form
-                    input(type="text" name="groupName" id="groupName")
+                    input(type="text" name="groupName" id="newGroup")
         section.col-lg-6.col-md-6.col-sm-12
             .groupBox
-                .text-center.boxText join to group
+                .text-center.boxText عضویک گروه بشو 
                 form
                     input(type="text" name="joinGroup" id="joinGroup")
 
@@ -26,12 +33,12 @@ body
     .row
         section.col-lg-6.col-md-6.col-sm-12
             .groupBox_forShowingList
-                .text-center.boxText.mb-5 owned groups list
+                .text-center.boxText.mb-5 گروه های خود
                 ol#ownedGroupsList.text-center
                 
         section.col-lg-6.col-md-6.col-sm-12
             .groupBox_forShowingList
-                .text-center.boxText.mb-5 joined groups list
+                .text-center.boxText.mb-5 گروه هایی که عضو هستید
                 ol#joinedGroupsList.text-center
     
 

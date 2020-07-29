@@ -102,18 +102,15 @@ const controller = {
 	removeUserFromGroup: async (req, res) => {
 		try {
 			let {id , groupName} = req.body
-
 			const _id = new mongoose.Types.ObjectId(id)
-			
-			console.log(_id ,groupName);
-
 			const user = await userModel.findByIdAndUpdate(_id , {
 				$pull:{
 					joined_Groups:groupName
 				}
 			})
 			if(!user){
-				return res.status(404).send({msg:'not found'})
+				req.flash("danger","not found")
+				res.redirect("/userList")
 			}
 			await groupModel.findOneAndUpdate({groupName},{
 				$pull:{
@@ -124,7 +121,9 @@ const controller = {
 				}
 			})
 
-			await res.end()
+			req.flash("success",`${user.userName} deleted from ${groupName}`)
+			res.redirect('/userList')
+			
 		} catch (err) {
 			res.status(500).send(`something went wrong ${err}`)
 			console.error(`something went wrong ${err}`)
@@ -151,7 +150,7 @@ const controller = {
 					password:hash,
 				},
 			})
-			res.status(200).send({msg:"your profile update now"})
+			res.status(200).send({msg:"your profile update now",userName})
 		} catch (err) {
 			console.error(err)
 		}
@@ -207,7 +206,6 @@ const controller = {
 			res.status(400).send(err)			
 		}
 	},
-
 	logout:async (req, res) => {
 		try{
 			await userModel.findByIdAndUpdate(req.user._id,{

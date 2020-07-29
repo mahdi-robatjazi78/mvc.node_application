@@ -57,8 +57,10 @@ const todoController = {
                 sender:_writenBy
             })
             await newTask.save()
-            res.status(200).send({msg:'your data saved now'})
-            
+
+            req.flash("success","تسک شماباموفقیت ‌ذخیره شد")
+            return res.redirect('/todoList')
+           
         } catch (err) {
             console.error(err);            
             res.status(400).send({msg:err})
@@ -68,27 +70,34 @@ const todoController = {
         try {
             let todo = Object.keys(req.body)[0]
             await todoModel.findOneAndDelete({todo})
-            res.end() 
+            req.flash('primary',"شمایک تسک حذف کردید ")
+            res.redirect("/todoList")
         } catch (err) {
             console.error(err);
+            req.flash("danger","مشکلی رخ داد دوباره امتحان کنید")
+            res.redirect('/todoList')
         }
     },
     updateTask : async(req,res)=>{
         try {
-            let task = req.body.todo
+            let task = req.body.task
             let oldTask = req.body.oldTask
 
            
-            await todoModel.findOneAndUpdate({
+            const findingTodo= await todoModel.findOne({
                 todo : oldTask
-            },{
-                $set:{todo:task}
             })
-
-
-            await res.end()
+            await findingTodo.update({
+                $set:{
+                    todo:task
+                }
+            })
+            req.flash("primary",`تسک شماباموفقیت تغییر یافت`)
+            res.redirect("/todoList")
+            
         } catch (err) {
             console.error(err);
+            req.flash('danger',"مشکلی رخ داد دوباره امتحان کنید")
         }
     },
     done : async(req,res)=>{

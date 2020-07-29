@@ -1,8 +1,8 @@
 require('dotenv').config()
 
-var uri
-const env = process.env
-env.DEV===true
+let uri
+let env = process.env
+env.DEV
 ?uri=env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
 :uri=env.ONLINE_MONGO_URI
 

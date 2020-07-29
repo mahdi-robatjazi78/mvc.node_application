@@ -9,10 +9,18 @@ body(style="heigth:150vh")
         p.col-lg-3.col-md-3.col-sm-12#yourPosition you are : 
         p.col-lg-3.col-md-3.col-sm-12#count members count :
 
-    section#TextArea 
-        label write todo for:
-        textarea#textarea(name="writeTodoToSomeBody" rows="5" cols="50")
-        button.btn.btn-success send Task
+    .row
+        .col.col-lg-6.col-md-6.col.sm-12
+            section#TextArea 
+                label write todo for:
+                textarea#textarea(name="writeTodoToSomeBody" rows="5" cols="50")
+                button.btn.btn-success send Task
+        .col.col-lg-6.col-md-6.col.sm-12
+            section#showMessage
+                
+
+    .container.mt-5
+        != messages("showMessages" , locals)
 
     main#table.mt-5
         .container.mb-2
@@ -29,7 +37,7 @@ body(style="heigth:150vh")
                         th cash
                         th pic
                         th signUp_Date_Time
-                        th Remove
+                        th.removeLogo Remove
 
                 tbody
                     tr(v-for="user in people")
@@ -47,8 +55,8 @@ body(style="heigth:150vh")
 
 
                         td {{user.signUpDate +'___'+ user.signUpTime}}
-                        td
+                        td.removeLogo
                             img.logo(src="/images/trash.svg" , v-on:click="RemoveUser(user)")
 
 
-                            
+    script.

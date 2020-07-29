@@ -6,8 +6,11 @@ body
     include ./header.pug
     .container.mb-5.mt-5
         form.input-group(id="form")
-            input.form-control(id="Task" class="search")
+            input.form-control#Task
             button.btn.btn-danger.btn-small#submitTask Submit Task
+
+    section#showMessages.container
+        != messages("showMessages",locals)
 
     main.container
         .d-flex.justify-content-between

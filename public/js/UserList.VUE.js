@@ -7,6 +7,17 @@ $(document).ready(function () {
 		)
 	}
 
+	const showMessage = (status,msg) =>{
+		$("#showMessage").append(`
+			<div class="alert alert-${status} alert-dismissible fade show text-right" role="alert">
+				${msg}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+		`)
+	}
+
 	$("#TextArea").css("display","none")
 
 	let fetch_Users_Info = () => {
@@ -29,6 +40,7 @@ $(document).ready(function () {
 
 		}
 
+
 		getGroupName=()=>{
 			//for user delete from group and send todo for users
 			return groupName
@@ -39,6 +51,10 @@ $(document).ready(function () {
 			function ({ data, count ,adminName }) {
 				
 			showinfo(count,adminName)
+
+
+		
+	
 			
 			let table = new Vue({
 				el: "#table",
@@ -59,6 +75,7 @@ $(document).ready(function () {
 						result
 						?
 							$.ajax({
+								beforeSend:sendToken,
 								url: "/userList/removeUserFromGroup",
 								method: "delete",
 								data: { 
@@ -66,19 +83,10 @@ $(document).ready(function () {
 									groupName:getGroupName()
 								}
 							})
-								.done(function () {
-
-									alert(
-										`${user.userName}  has deleted now`
-									)
-									window.location.reload()
-								})
-								.fail(function (err) {
-									alert(err.msg)
-								})
-						: () => {
-							return
-						}
+						: 
+							() => {
+								return
+							}
 					},
 					//search Users
 					searchUser: function () {
@@ -95,6 +103,7 @@ $(document).ready(function () {
 								$("#TextArea label span").remove()
 								$("#TextArea label").append(`<span class="text-primary"> ${item.userName} </span>`)	
 								
+								$("showMessage")
 
 								var sender = [];
 
@@ -125,11 +134,13 @@ $(document).ready(function () {
 											},
 											success:function(){
 												Success=true
-												alert("your task sended now")
+												showMessage("primary","تسک شماباموفقیت فرستاده شد")
+												setInterval(()=>{
+													$("#textarea").val("")
+												},2000)
 											},
-											error:function(err){
+											error:function(){
 												Success=false
-												alert(err.msg)
 											}
 										})
 
@@ -146,11 +157,19 @@ $(document).ready(function () {
 			})
 			$("tr").on("click",function(event){
 				table.sendTodo(event)
+				showMessage('warning',"اول تسک خود را بنویسید بعد دکمه فرستادن را بزنید")
 			})
+
+			let txt = $("#yourPosition span").text()
+			if(txt.includes("joined")){
+				$(".removeLogo").css("display","none")
+			}else{
+				$(".removeLogo").css("display","block")
+			}
 		})
 	}
 
 	fetch_Users_Info()
 
-	
+
 })

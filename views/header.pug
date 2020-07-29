@@ -2,7 +2,6 @@ link(rel="stylesheet" , href="/css/header.css")
 script(type="text/javascript" src="/js/headerScript.js")
 header
     nav
-
         .burger
             div
             div
@@ -24,14 +23,13 @@ header
                 .dropdown-menu.bg-secondary(aria-labelledby="dropdownMenuButton")          
                     a.dropdown-item(href="/profile/register") register
                     a.dropdown-item(href="/profile/login") login
-                    a.dropdown-item(href="/profile/editProfile") edit profile
+                    a.dropdown-item edit profile
                     a.dropdown-item(href="#" id="logout" ) logout
         .info.ml-auto
             div(style="width=50px")
-                .m-auto
-                    img(id="userLogo" alt="userLogo" width="40px" height='30px')
+                img(id="userLogo" alt="userLogo" width="40px" height='30px')
                         
             .mr-3
                 small
                     .col
-                        i#data
+                        i.text-warning#data

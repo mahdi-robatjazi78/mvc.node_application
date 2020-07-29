@@ -1,4 +1,5 @@
 $(document).ready(function () {
+	$("#Task").val('')
 
 	// SEND TOKEN FOR AUTHENTICATION BEFORE EXECUTE ANY OPERATION
 	const sendToken = function (request) {
@@ -21,8 +22,7 @@ $(document).ready(function () {
 			e.preventDefault()
 		}
 
-		let todo = $("#Task").val()
-		if (todo == "") {
+		if ($("#Task").val() == "") {
 			nullTodoInput()
 		} else {
 			if (editMode === false) {
@@ -31,30 +31,32 @@ $(document).ready(function () {
 					beforeSend: sendToken,
 					method: "post",
 					url: "/todoList/newTask",
-					data: { task:todo ,sender:["self"] },
+					data: { task:$("#Task").val() ,sender:["self"] },
+					success:function(){
+						Success=true
+					},
+					error:function(){
+						Success=false
+					}
 				})
-					.done(() => {
-						window.location.reload()
-					})
-					.fail((message) => {
-						console.error(message)
-					})
 			} else {
 				// UPDATE TASK
 				$.ajax({
 					beforeSend: sendToken,
 					method: "put",
 					url: "/todoList/updateTask",
-					data: { task:todo, oldTask },
-				})
-					.done(function () {
+					data: { task:$("#Task").val() , oldTask },
+					success:function(){
+						Success=true
 						editMode = false
 						alert("your task updated now")
 						window.location.reload()
-					})
-					.fail(function (err) {
-						console.error(err)
-					})
+					},
+					error:function(err){
+						Success=false
+						console.error(err.msg)
+					}
+				})
 			}
 		}
 	})
@@ -126,6 +128,19 @@ $(document).ready(function () {
 				// WRITE TASKS TO TODOLIST PAGE
 				writeHtmlTable(data.allTasks, data.moment)
 
+				let qty_rows = $("#tbody tr").length
+
+				for(let i = 0 ; i<=qty_rows ; i++){
+					let txt = $(`#tbody tr:eq(${i}) td:last-child`).text()
+					if(txt==="self"){
+						$(`#tbody tr:eq(${i}) td.edit img`).css("display","block")
+					}else{
+						$(`#tbody tr:eq(${i}) td.edit img`).css("display","none")
+					}
+				}
+
+
+
 				// CHECKED EVENT FOR TASKLISTS
 				$(".chk").on("click", function (e) {
 					let isChecked = e.target.checked
@@ -160,11 +175,19 @@ $(document).ready(function () {
 
 				// EDIT MODE
 				$(".edit").on("click", function (e) {
-					const todo = $(this).closest("tr").find("td:eq(1)").text()
-					$("#Task").val(todo)
-					$("#submitTask").text("Edit Task")
-					oldTask = todo
-					editMode = true
+					var thiss = this
+					var visible = $(thiss).find('img').css('display')
+					if(visible === 'none'){
+						return
+					}else{
+						$('html, body').animate({scrollTop: '0px'}, 1000);
+						const todo = $(thiss).closest("tr").find("td:eq(1)").text()
+						$("#Task").val(todo)
+						$("#submitTask").text("Edit Task")
+						oldTask = todo
+						editMode = true
+					}
+
 				})
 			},
 			fail: function (err) {
