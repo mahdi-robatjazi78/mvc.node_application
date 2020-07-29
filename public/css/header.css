@@ -4,8 +4,8 @@ header{
     background-color:#7a7a7a;
 }
 nav{
-    padding:10px 0 0 15px;
-    display:flex
+	display:flex;
+	padding:15px 0 0 15px;
 }
 .nav-link{
     width:800px;

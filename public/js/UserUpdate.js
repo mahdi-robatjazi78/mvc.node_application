@@ -7,11 +7,6 @@ $(document).ready(function () {
         )
     }
 
-
-
-
-    
-    
     // edit profile part
 
     let edit = new Vue({

@@ -27,6 +27,9 @@ label{
 	margin-left:auto;
 	margin-top:5px;
 }
+table tbody tr:hover{
+	cursor: pointer;
+}
 
 table th,table td {
 	text-align:center
@@ -65,7 +68,7 @@ main{
 .display-4{
 	font-size:2em;
 }
-.search{
+#Task{
 	background-color:rgb(223, 223, 223);
 	border:1px solid black;
 	border-radius:9px;
@@ -124,7 +127,7 @@ main{
 	table{
 		overflow-x:scroll;
 	}
-	.search{
+	#Task{
 		width:100%;
 	}
 	#count{

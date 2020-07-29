@@ -33,6 +33,7 @@ $(document).ready(function () {
                     }else{
                         sessionStorage.setItem('cash',cash)
                     }
+                    window.location.reload()
                 },
                 fail:function(err){
                     console.error(err)

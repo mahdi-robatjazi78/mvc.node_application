@@ -38,7 +38,7 @@ $(document).ready(function () {
                     success: function (res) {
                         Success = true
                         login.saveUserToken(res)
-                        window.location.reload()
+                        location.assign('/')
                     },
                     error: function (err) {
                         Success = false
