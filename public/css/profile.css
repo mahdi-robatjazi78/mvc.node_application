@@ -13,7 +13,12 @@ body{
     padding:55px;
     margin-top:50px;
 }
+.ProfileCard label{
+    color:red;
+}
 .ProfileCard input{
     background:none;
-    border:1px solid black
+    border:1px solid black;
+    color:rgb(0, 255, 0);
+    font-weight: bold;
 }
