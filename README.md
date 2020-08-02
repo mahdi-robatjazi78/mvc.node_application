@@ -1,7 +1,6 @@
 # api-test
 
 project handled with this tech's : (( ** EXPRESS & MONGOOSE & PUG ** )) ((*VUE & JQUERY*))
-
   > i build this project **alone**.  for my cv, please just test that
 
 
