@@ -1,0 +1,19 @@
+include layout.pug
+link(rel="stylesheet"  href="/css/chatMessagePage.css")
+body
+    include header.pug
+
+
+    div#chatMessageBox
+        header
+        main
+            aside
+            section#messageBox
+        footer
+            #form
+                input#input
+                button#sendMessage send
+
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js")
+    script(src="/js/chatClient.js")

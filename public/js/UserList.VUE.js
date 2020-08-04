@@ -171,5 +171,4 @@ $(document).ready(function () {
 
 	fetch_Users_Info()
 
-
 })

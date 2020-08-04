@@ -177,7 +177,7 @@ const controller = {
 			let token = jwt.sign({
 				_id: user._id.toHexString(),
 				access: 'auth'
-			}, process.env.JWT_SECRET_KEY, { expiresIn: (60 * 60) * 24 }).toString()
+			}, process.env.JWT_SECRET_KEY).toString()
 
 			user.tokens.push({
 				token
@@ -220,8 +220,7 @@ const controller = {
 		}catch(err){
 			res.staus(500).send({msg:err})
 		}
-	}
-
+	},
 }
 
 module.exports = controller
