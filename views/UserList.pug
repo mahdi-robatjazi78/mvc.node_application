@@ -26,7 +26,7 @@ body(style="heigth:150vh")
         .container.form-group.m-auto.mb-2.row
             input.form-control.col-9(type="text"  placeholder="search in userNames",
                 v-model="textSearch",v-on:keyup="searchUser" class="search")
-            a.btn.btn-outline-primary.col-3#getChatPage(href="/userList/chatPage") chat with friends
+            a.btn.btn-primary.col-3#getChatPage(href="/userList/chatPage") chat with friends
         .container    
             table.table_Users.table.table-hover.table-sm.table-dark.table-responsive-sm
                 caption.groupName list of users 
@@ -50,7 +50,7 @@ body(style="heigth:150vh")
                             div(v-if="!user.imageAddress")
                                 img(src="/images/user_logo.png" width="30px")
                             div(v-else)
-                                img(:src="'http://localhost:3000/image/user/'+user.imageAddress.filename"
+                                img(:src="location+'/image/user/'+user.imageAddress.filename"
                                     width="60px"
                                     height="50px")
 

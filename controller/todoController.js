@@ -87,7 +87,7 @@ const todoController = {
             const findingTodo= await todoModel.findOne({
                 todo : oldTask
             })
-            await findingTodo.update({
+            await findingTodo.updateOne({
                 $set:{
                     todo:task
                 }

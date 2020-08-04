@@ -3,12 +3,8 @@ mongoose.Promise = global.Promise
 require("dotenv").config()
 
 
-var uri 
-var env = process.env
-
-env.DEV
-?uri=env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
-:uri=env.ONLINE_MONGO_URI
+let env = process.env
+let uri = env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME 
 
 
 const conn = mongoose.createConnection(uri,{

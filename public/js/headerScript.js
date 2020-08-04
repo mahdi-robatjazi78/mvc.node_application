@@ -3,6 +3,12 @@ $(document).ready(function () {
     const getAuth = ()=>{
         return localStorage.getItem('x-auth') || sessionStorage.getItem("x-auth")
     }
+    const getDataFromLocal =()=>{
+        return localStorage.getItem('userName')+"_"+localStorage.getItem("cash")
+    }
+    const getDataFromSessin=()=>{
+        return sessionStorage.getItem('userName')+"_"+sessionStorage.getItem("cash")
+    }
     
     const sendToken = (request) =>{
         request.setRequestHeader("Authorization" , getAuth())
@@ -18,7 +24,7 @@ $(document).ready(function () {
                     Success=true
                     localStorage.clear()
                     sessionStorage.clear()
-                    window.location.reload()
+                    window.location.assign(window.location.origin+"/profile/login")
                     alert(data.msg)
     
                 },
@@ -33,9 +39,15 @@ $(document).ready(function () {
         }
     })
     if(getAuth()){
-        $('#data').html(localStorage.getItem('userName')+"_"+localStorage.getItem("cash")||
-        sessionStorage.getItem('userName')+"_"+sessionStorage.getItem('cash')
-        )
+
+        let data 
+        if(localStorage.getItem('userName')){
+            data = getDataFromLocal()
+        }else{
+            data = getDataFromSessin()
+        }
+
+        document.getElementById('data').innerText = data
     }else{
         $('#data').html(
             'you are not login'
@@ -83,7 +95,8 @@ $(document).ready(function () {
     if(imageFilename=="undefined"||imageFilename==undefined){
         $('#userLogo').attr("src","/images/user_logo.png")
     }else{
-        $('#userLogo').attr("src",`http://localhost:3000/image/user/${imageFilename}`)
+        let location = window.location.origin
+        $('#userLogo').attr("src",`${location}/image/user/${imageFilename}`)
     } 
     
     window.addEventListener('resize',function(){

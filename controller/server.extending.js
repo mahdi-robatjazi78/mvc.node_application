@@ -1,10 +1,8 @@
 require('dotenv').config()
 
-let uri
 let env = process.env
-env.DEV
-?uri=env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME
-:uri=env.ONLINE_MONGO_URI
+let uri = env.OFLINE_MONGO_URI+env.MONGO_PORT+"/"+env.DB_NAME 
+
 
 
 const multer = require('multer')

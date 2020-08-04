@@ -64,6 +64,7 @@ $(document).ready(function () {
 	//WRITE TASKS ON TABLE TODO
 	const writeHtmlTable = (allTasks) => {
 		let checkboxValues = []
+		allTasks.reverse()
 		allTasks.map((item, index) => {
 			checkboxValues.push(item.isDone)
 
@@ -103,14 +104,12 @@ $(document).ready(function () {
 		})
 	}
 
-
-
 	// SHOW TASKS
 	$(".all,.disable,.enabled").on("click",function () {
 		let fetchStatus = $(this).attr("value")
 		fetchTodos(fetchStatus)
 	})
-
+	// FETCH ALL TASKS FROM BACKEND
 	const fetchTodos=(status)=>{
 		$("#tbody").html("")
 		$.ajax({
@@ -195,5 +194,7 @@ $(document).ready(function () {
 			},
 		})
 	}
+
+	// IN DEFAULT CALL FETCH TODOS AND GET ALL TASKS
 	fetchTodos("all")
 })

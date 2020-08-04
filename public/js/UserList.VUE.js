@@ -51,16 +51,13 @@ $(document).ready(function () {
 			function ({ data, count ,adminName }) {
 				
 			showinfo(count,adminName)
-
-
-		
-	
 			
 			let table = new Vue({
 				el: "#table",
 				data: {
-					people: data.reverse(),
-					textSearch: null,
+					people:data.reverse(),
+					textSearch:null,
+					location:window.location.origin
 				},
 				methods: {
 					//get userImageSource

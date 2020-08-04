@@ -1,3 +1,4 @@
+require("dotenv").config()
 const express = require("express")
 const app = express()
 const http = require("http")
@@ -10,7 +11,6 @@ const io = require('socket.io')(server)
 const {chatOperation} = require("./controller/chatController")
 
 
-require("dotenv").config()
 
 app.set("view engine", "pug")
 app.use(bodyParser.json())
@@ -31,12 +31,8 @@ app.use(function(req,res,next){
 })
 
 app.use(appRouter)
-var port	
-var env = process.env
-env.DEV ? port = env.DEV_APP_PORT : port = env.APP_PORT
 
-
-
+let port = process.env.port || 3000;
 server.listen(port, () => {
 	console.log(`server is running on port ${port}`)
 })
@@ -46,7 +42,5 @@ io.on("connection",(socket)=>{
 	console.log('a user connected');
 	socket.broadcast.emit('userConnection',"a user connected")
 	chatOperation(socket)
-
-
 })
 

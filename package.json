@@ -4,8 +4,7 @@
   "description": "this is for test rest api",
   "main": "server.js",
   "scripts": {
-    "start": "set DEV=false && node server.js",
-    "test": "set DEV=true && nodemon server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
