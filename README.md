@@ -6,9 +6,8 @@ project handled with this tech's : (( ** EXPRESS & MONGOOSE & PUG ** )) ((*VUE &
 
 ## how run ?
 
-  - first npm install
-  - second npm test
-    - don't use npm start this command for use online database in mongo atlas and change port
+  - first npm install to install dependencies
+  - second npm start to run this project
 
 
 ## my todos
